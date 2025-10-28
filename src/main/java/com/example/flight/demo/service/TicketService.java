@@ -27,6 +27,4 @@ public class TicketService {
     public boolean cancel(Long ticketId) { return tickets.delete(ticketId); }
 
     public List<Ticket> all() { return tickets.findAll(); }
-    public List<Ticket> byFlight(Long flightId) { return tickets.findByFlightId(flightId); }
-    public List<Ticket> byPassenger(Long passengerId) { return tickets.findByPassengerId(passengerId);}
 }

@@ -20,6 +20,5 @@ public class PassengerService {
     public Optional<Passenger> find(Long id) { return passengers.findById(id); }
     public List<Passenger> all() { return passengers.findAll(); }
 
-    // helper
-    public List<Passenger> byCurrency(String currency) { return passengers.findByCurrency(currency);}
+
 }

@@ -20,6 +20,4 @@ public class LuggageService {
     public Optional<Luggage> find(Long id) { return luggages.findById(id); }
     public List<Luggage> all() { return luggages.findAll(); }
 
-    public List<Luggage> byTicket(Long ticketId) { return luggages.findByTicketId(ticketId); }
-    public List<Luggage> byStatus(String status) { return luggages.findByStatus(status); }
 }

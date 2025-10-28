@@ -26,7 +26,6 @@ public class FlightService {
     }
 
     public List<Flight> all() { return flights.findAll(); }
-    public List<Flight> byDate(LocalDate date) { return flights.findByDate(date); }
 
     public void delay(Long id) { setStatus(id, "DELAYED"); }
     public void cancel(Long id) { setStatus(id, "CANCELLED"); }

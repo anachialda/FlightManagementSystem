@@ -21,5 +21,4 @@ public class NoticeBoardService {
     public Optional<NoticeBoard> find(Long id) { return boards.findById(id); }
     public List<NoticeBoard> all() { return boards.findAll(); }
 
-    public Optional<NoticeBoard> byDate(LocalDate date) { return boards.findByDate(date); }
 }
