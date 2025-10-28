@@ -19,6 +19,4 @@ public class AirplaneService {
     public boolean delete(Long id) { return airplanes.delete(id); }
     public Optional<Airplane> find(Long id) { return airplanes.findById(id); }
     public List<Airplane> all() { return airplanes.findAll(); }
-
-    public Optional<Airplane> findByNumber(int number) { return airplanes.findByNumber(number); }
 }

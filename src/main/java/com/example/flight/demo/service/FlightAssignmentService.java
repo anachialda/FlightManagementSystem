@@ -19,7 +19,4 @@ public class FlightAssignmentService {
     public boolean delete(Long id) { return assignments.delete(id); }
     public Optional<FlightAssignment> find(Long id) { return assignments.findById(id); }
     public List<FlightAssignment> all() { return assignments.findAll(); }
-
-    public List<FlightAssignment> byFlight(Long flightId) { return assignments.findByFlightId(flightId); }
-    public List<FlightAssignment> byStaff(Long staffId) { return assignments.findByStaffId(staffId); }
 }

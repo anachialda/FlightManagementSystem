@@ -19,6 +19,4 @@ public class AirlineEmployeeService {
     public boolean delete(Long id) { return employees.delete(id); }
     public Optional<AirlineEmployee> find(Long id) { return employees.findById(id); }
     public List<AirlineEmployee> all() { return employees.findAll(); }
-
-    //public List<AirlineEmployee> byRole(String role) { return employees.findByRole(role);}
 }
