@@ -38,11 +38,4 @@ public class AirportEmployeeRepository implements CrudRepository<AirportEmployee
     public boolean delete(Long id) {
         return items.removeIf(x -> x.getId().equals(id));
     }
-
-    public List<AirportEmployee> findByDepartment(String department) {
-        if (department == null) return List.of();
-        return items.stream()
-                .filter(x -> x.getDepartment() != null && x.getDepartment().equalsIgnoreCase(department))
-                .toList();
-    }
 }

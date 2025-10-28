@@ -38,18 +38,4 @@ public class FlightAssignmentRepository implements CrudRepository<FlightAssignme
     public boolean delete(Long id) {
         return items.removeIf(x -> x.getId().equals(id));
     }
-
-    // domain helpers
-    public List<FlightAssignment> findByFlightId(Long flightId) {
-        if (flightId == null) return List.of();
-        return items.stream()
-                .filter(x -> flightId.equals(x.getFlightId()))
-                .toList();
-    }
-
-    public List<FlightAssignment> findByStaffId(Long staffId) {
-        if (staffId == null) return List.of();
-        return items.stream()
-                .filter(x -> staffId.equals(x.getStaffId()))
-                .toList();}
 }

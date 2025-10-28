@@ -38,5 +38,4 @@ public class AirlineEmployeeRepository implements CrudRepository<AirlineEmployee
     public boolean delete(Long id) {
         return items.removeIf(x -> x.getId().equals(id));
     }
-
 }

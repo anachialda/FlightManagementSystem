@@ -38,9 +38,4 @@ public class AirplaneRepository implements CrudRepository<Airplane> {
     public boolean delete(Long id) {
         return items.removeIf(x -> x.getId().equals(id));
     }
-
-    // domain helper (optional)
-    public Optional<Airplane> findByNumber(int number) {
-        return items.stream().filter(x -> x.getNumber() == number).findFirst();
-}
 }
