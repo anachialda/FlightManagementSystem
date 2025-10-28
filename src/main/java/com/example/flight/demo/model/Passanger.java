@@ -7,7 +7,7 @@ public class Passanger {
     private Long id;
     private String name;
     private String currency;
-    private List<Long> tickets = new ArrayList<>(); // Ticket IDs
+    private List<Long> tickets = new ArrayList<>();
 
     public Passanger() {}
     public Passanger(Long id, String name, String currency) {
