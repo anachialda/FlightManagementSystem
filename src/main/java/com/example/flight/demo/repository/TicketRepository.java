@@ -39,24 +39,4 @@ public class TicketRepository implements CrudRepository<Ticket> {
         return items.removeIf(x -> x.getId().equals(id));
     }
 
-    // domain helpers
-    public List<Ticket> findByFlightId(Long flightId) {
-        return items.stream()
-                .filter(x -> x.getFlightId() != null && x.getFlightId().equals(flightId))
-                .toList();
-    }
-
-    public Optional<Ticket> findByFlightIdAndSeat(Long flightId, String seatNumber) {
-        if (seatNumber == null) return Optional.empty();
-        return items.stream()
-                .filter(x -> x.getFlightId() != null && x.getFlightId().equals(flightId))
-                .filter(x -> x.getSeatNumber() != null && x.getSeatNumber().equalsIgnoreCase(seatNumber))
-                .findFirst();
-    }
-
-    public List<Ticket> findByPassengerId(Long passengerId) {
-        return items.stream()
-                .filter(x -> x.getPassengerId() != null && x.getPassengerId().equals(passengerId))
-                .toList();
-    }
 }

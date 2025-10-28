@@ -39,10 +39,4 @@ public class PassengerRepository implements CrudRepository<Passenger> {
         return items.removeIf(x -> x.getId().equals(id));
     }
 
-    public List<Passenger> findByCurrency(String currency) {
-        if (currency == null) return List.of();
-        return items.stream()
-                .filter(x -> x.getCurrency() != null && x.getCurrency().equalsIgnoreCase(currency))
-                .toList();
-    }
 }

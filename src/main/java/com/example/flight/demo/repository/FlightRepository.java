@@ -40,32 +40,4 @@ public class FlightRepository implements CrudRepository<Flight> {
         return items.removeIf(x -> x.getId().equals(id));
     }
 
-    // domain helpers (optional)
-    public List<Flight> findByDate(LocalDate date) {
-        if (date == null) return List.of();
-        return items.stream()
-                .filter(x -> x.getDepartureTime() != null && x.getDepartureTime().toLocalDate().equals(date))
-                .toList();
-    }
-
-    public List<Flight> findByAirplaneId(Long airplaneId) {
-        if (airplaneId == null) return List.of();
-        return items.stream()
-                .filter(x -> airplaneId.equals(x.getAirplaneId()))
-                .toList();
-    }
-
-    public List<Flight> findByNoticeBoardId(Long noticeBoardId) {
-        if (noticeBoardId == null) return List.of();
-        return items.stream()
-                .filter(x -> noticeBoardId.equals(x.getNoticeBoardId()))
-                .toList();
-    }
-
-    public List<Flight> findByStatus(String status) {
-        if (status == null) return List.of();
-        return items.stream()
-                .filter(x -> x.getStatus() != null && x.getStatus().equalsIgnoreCase(status))
-                .toList();
-}
 }

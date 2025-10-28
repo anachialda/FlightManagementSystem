@@ -39,17 +39,4 @@ public class LuggageRepository implements CrudRepository<Luggage> {
         return items.removeIf(x -> x.getId().equals(id));
     }
 
-    // domain helpers
-    public List<Luggage> findByTicketId(Long ticketId) {
-        if (ticketId == null) return List.of();
-        return items.stream()
-                .filter(x -> ticketId.equals(x.getTicketId()))
-                .toList();
-    }
-
-    public List<Luggage> findByStatus(String status) {
-        if (status == null) return List.of();
-        return items.stream()
-                .filter(x -> x.getStatus() != null && x.getStatus().equalsIgnoreCase(status))
-                .toList();}
 }

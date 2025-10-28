@@ -40,9 +40,5 @@ public class NoticeBoardRepository implements CrudRepository<NoticeBoard> {
         return items.removeIf(x -> x.getId().equals(id));
     }
 
-    public Optional<NoticeBoard> findByDate(LocalDate date) {
-        if (date == null) return Optional.empty();
-        return items.stream()
-                .filter(x -> date.equals(x.getDate()))
-                .findFirst();}
+
 }
