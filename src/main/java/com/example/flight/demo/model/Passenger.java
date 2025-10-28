@@ -3,14 +3,14 @@ package com.example.flight.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Passanger {
+public class Passenger {
     private Long id;
     private String name;
     private String currency;
     private List<Long> tickets = new ArrayList<>();
 
-    public Passanger() {}
-    public Passanger(Long id, String name, String currency) {
+    public Passenger() {}
+    public Passenger(Long id, String name, String currency) {
         this.id = id; this.name = name; this.currency = currency;
     }
 
