@@ -1,13 +1,14 @@
 package com.example.flight.demo.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AirlineEmployee extends Staff {
-    private String role;
+    private String role; // enum
     private List<Long> assignments = new ArrayList<>();
     private String licenseNumber;
-    private int experienceYears;
+    private LocalDate workStart;
 
     public AirlineEmployee() {}
     public AirlineEmployee(Long id, String name, String role) {
@@ -21,6 +22,6 @@ public class AirlineEmployee extends Staff {
     public void setAssignments(List<Long> assignments) { this.assignments = assignments; }
     public String getLicenseNumber() { return licenseNumber; }
     public void setLicenseNumber(String licenseNumber) { this.licenseNumber = licenseNumber; }
-    public int getExperienceYears() { return experienceYears; }
-    public void setExperienceYears(int experienceYears) {this.experienceYears = experienceYears;}
+    public LocalDate getWorkStart() { return workStart; }
+    public void setWorkStart(LocalDate workStart) { this.workStart = workStart; }
 }

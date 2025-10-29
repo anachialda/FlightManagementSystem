@@ -13,7 +13,7 @@ public class Flight {
     private LocalDateTime arrivalTime;
     private List<Long> tickets = new ArrayList<>();
     private List<Long> flightAssignments = new ArrayList<>();
-    private String status = "SCHEDULED";
+    private String status = "SCHEDULED"; //enum
 
     public Flight() {}
 
