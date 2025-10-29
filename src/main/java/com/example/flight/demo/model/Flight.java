@@ -11,10 +11,9 @@ public class Flight {
     private Long airplaneId;    // link
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
-    private List<Long> tickets = new ArrayList<>();          // Ticket IDs
-    private List<Long> flightAssignments = new ArrayList<>();// FlightAssignment IDs
-    private String status = "SCHEDULED"; // small extension
-    private double durationHours;
+    private List<Long> tickets = new ArrayList<>();
+    private List<Long> flightAssignments = new ArrayList<>();
+    private String status = "SCHEDULED";
 
     public Flight() {}
 
@@ -43,6 +42,5 @@ public class Flight {
     public void setFlightAssignments(List<Long> flightAssignments) { this.flightAssignments = flightAssignments; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
-    public double getDurationHours() { return durationHours; }
-    public void setDurationHours(double durationHours) { this.durationHours = durationHours; }
+
 }
