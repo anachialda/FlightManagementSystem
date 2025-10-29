@@ -7,6 +7,7 @@ public class AirlineEmployee extends Staff {
     private String role;
     private List<Long> assignments = new ArrayList<>();
     private String licenseNumber;
+    private int experienceYears;
 
     public AirlineEmployee() {}
     public AirlineEmployee(Long id, String name, String role) {
@@ -20,4 +21,6 @@ public class AirlineEmployee extends Staff {
     public void setAssignments(List<Long> assignments) { this.assignments = assignments; }
     public String getLicenseNumber() { return licenseNumber; }
     public void setLicenseNumber(String licenseNumber) { this.licenseNumber = licenseNumber; }
+    public int getExperienceYears() { return experienceYears; }
+    public void setExperienceYears(int experienceYears) {this.experienceYears = experienceYears;}
 }
