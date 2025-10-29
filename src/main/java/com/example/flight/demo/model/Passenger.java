@@ -8,6 +8,8 @@ public class Passenger {
     private String name;
     private String currency;
     private List<Long> tickets = new ArrayList<>();
+    private String email;
+    private boolean vip;
 
     public Passenger() {}
     public Passenger(Long id, String name, String currency) {
@@ -22,4 +24,8 @@ public class Passenger {
     public void setCurrency(String currency) { this.currency = currency; }
     public List<Long> getTickets() { return tickets; }
     public void setTickets(List<Long> tickets) { this.tickets = tickets; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public boolean isVip() { return vip; }
+    public void setVip(boolean vip) { this.vip = vip; }
 }
