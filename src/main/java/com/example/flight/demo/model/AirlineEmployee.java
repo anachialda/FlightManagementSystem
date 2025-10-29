@@ -6,6 +6,7 @@ import java.util.List;
 public class AirlineEmployee extends Staff {
     private String role;
     private List<Long> assignments = new ArrayList<>();
+    private String licenseNumber;
 
     public AirlineEmployee() {}
     public AirlineEmployee(Long id, String name, String role) {
@@ -17,4 +18,6 @@ public class AirlineEmployee extends Staff {
     public void setRole(String role) { this.role = role; }
     public List<Long> getAssignments() { return assignments; }
     public void setAssignments(List<Long> assignments) { this.assignments = assignments; }
+    public String getLicenseNumber() { return licenseNumber; }
+    public void setLicenseNumber(String licenseNumber) { this.licenseNumber = licenseNumber; }
 }

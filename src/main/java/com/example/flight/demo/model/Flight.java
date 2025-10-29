@@ -14,6 +14,7 @@ public class Flight {
     private List<Long> tickets = new ArrayList<>();          // Ticket IDs
     private List<Long> flightAssignments = new ArrayList<>();// FlightAssignment IDs
     private String status = "SCHEDULED"; // small extension
+    private double durationHours;
 
     public Flight() {}
 
@@ -42,4 +43,6 @@ public class Flight {
     public void setFlightAssignments(List<Long> flightAssignments) { this.flightAssignments = flightAssignments; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public double getDurationHours() { return durationHours; }
+    public void setDurationHours(double durationHours) { this.durationHours = durationHours; }
 }
