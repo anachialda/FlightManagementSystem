@@ -15,25 +15,7 @@ public class FlightService {
         this.flights = flights;
     }
 
-    public Flight schedule(Flight f) {
-        if (f.getDepartureTime() == null || f.getArrivalTime() == null) {
-            throw new IllegalArgumentException("departureTime and arrivalTime are required");
-        }
-        if (f.getArrivalTime().isBefore(f.getDepartureTime())) {
-            throw new IllegalArgumentException("arrivalTime must be after departureTime");
-        }
-        return flights.save(f);
-    }
 
     public List<Flight> all() { return flights.findAll(); }
 
-    public void delay(Long id) { setStatus(id, "DELAYED"); }
-    public void cancel(Long id) { setStatus(id, "CANCELLED"); }
-
-    private void setStatus(Long id, String status) {
-        flights.findById(id).ifPresent(f -> {
-            f.setStatus(status);
-            flights.save(f);
-        }
-        );}
 }
