@@ -38,11 +38,4 @@ public class TicketRepository implements CrudRepository<Ticket> {
     public boolean delete(Long id) {
         return items.removeIf(x -> x.getId().equals(id));
     }
-
-    public Optional<Ticket> findByFlightIdAndSeat(Long flightId, String seatNumber) {
-        return items.stream()
-                .filter(t -> t.getFlightId().equals(flightId))
-                .filter(t -> t.getSeatNumber().equalsIgnoreCase(seatNumber))
-                .findFirst();
-    }
 }
