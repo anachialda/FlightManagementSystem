@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Airplane</title>
+</head>
 <body>
 <h1>New Airplane</h1>
+
 <form action="/airplanes" method="post" th:object="${airplane}">
     <p>
-        <label>Number: <input th:field="*{number}" type="number" required/></label>
+        <label>Number: </label>
+        <input th:field="*{number}" type="number" required/>
     </p>
+
+    <p>
+        <label>Flights (comma-separated IDs): </label>
+        <input type="text"
+               th:value="${airplane.flights != null ? #strings.listJoin(airplane.flights, ', ') : ''}"
+               name="flights"/>
+    </p>
+
     <p>
         <button type="submit">Create</button>
         <a href="/airplanes">Cancel</a>
     </p>
 </form>
+
 </body>
 </html>
