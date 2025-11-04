@@ -15,7 +15,6 @@ public class FlightService {
         this.flights = flights;
     }
 
-
     public List<Flight> all() { return flights.findAll(); }
 
 }
