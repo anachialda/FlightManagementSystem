@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Airline Employees</title></head>
+<body>
+<h1>Airline Employees</h1>
+<p><a href="/airline-employees/new">Add Airline Employee</a></p>
+
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Role</th>
+        <th>LicenseNumber</th>
+        <th>ExperienceYears</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${employees}">
+        <td th:text="${e.id}">1</td>
+        <td th:text="${e.role}">Pilot</td>
+        <td th:text="${e.licenseNumber}">ABC-123</td>
+        <td th:text="${e.experienceYears}">5</td>
+        <td>
+            <form th:action="@{'/airline-employees/' + ${e.id} + '/delete'}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

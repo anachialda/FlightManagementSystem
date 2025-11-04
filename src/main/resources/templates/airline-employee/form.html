@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>New Airline Employee</title></head>
+<body>
+<h1>New Airline Employee</h1>
+
+<form action="/airline-employees" method="post" th:object="${employee}">
+    <p>
+        <label>Role: <input th:field="*{role}" required/></label>
+    </p>
+    <p>
+        <label>License Number: <input th:field="*{licenseNumber}"/></label>
+    </p>
+    <p>
+        <label>Experience Years: <input th:field="*{experienceYears}" type="number" min="0"/></label>
+    </p>
+    <p>
+        <button type="submit">Create</button>
+        <a href="/airline-employees">Cancel</a>
+    </p>
+</form>
+</body>
+</html>
