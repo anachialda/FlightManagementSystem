@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Tickets</title></head>
+<body>
+<h1>Tickets</h1>
+<p><a href="/tickets/new">Issue Ticket</a></p>
+
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>PassengerId</th>
+        <th>FlightId</th>
+        <th>Seat</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${tickets}">
+        <td th:text="${t.id}">1</td>
+        <td th:text="${t.passengerId}">10</td>
+        <td th:text="${t.flightId}">1</td>
+        <td th:text="${t.seatNumber}">12A</td>
+        <td th:text="${t.price}">150.0</td>
+        <td>
+            <form th:action="@{'/tickets/' + ${t.id} + '/delete'}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

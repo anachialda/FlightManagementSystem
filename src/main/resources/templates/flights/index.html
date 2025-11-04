@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Flights</title></head>
+<body>
+<h1>Flights</h1>
+<p><a href="/flights/new">Add Flight</a></p>
+
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>NoticeBoardId</th>
+        <th>AirplaneId</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="f : ${flights}">
+        <td th:text="${f.id}">1</td>
+        <td th:text="${f.name}">RO123</td>
+        <td th:text="${f.noticeBoardId}">1</td>
+        <td th:text="${f.airplaneId}">1</td>
+        <td th:text="${f.departureTime}">2025-11-01T09:00</td>
+        <td th:text="${f.arrivalTime}">2025-11-01T11:00</td>
+        <td th:text="${f.status}">SCHEDULED</td>
+        <td>
+            <form th:action="@{'/flights/' + ${f.id} + '/delete'}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
