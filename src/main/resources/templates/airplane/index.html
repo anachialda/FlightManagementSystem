@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Airplanes</h1>
+<p><a href="/airplanes/new">Add Airplane</a></p>
+
+<table border="1" cellpadding="6">
+    <tr><th>ID</th><th>Number</th><th>Actions</th></tr>
+    <tr th:each="a : ${airplanes}">
+        <td th:text="${a.id}">1</td>
+        <td th:text="${a.number}">737</td>
+        <td>
+            <form th:action="@{'/airplanes/' + ${a.id} + '/delete'}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
