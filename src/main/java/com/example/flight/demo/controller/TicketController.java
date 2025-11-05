@@ -38,6 +38,7 @@ public class TicketController {
             @RequestParam Double price
     ) {
         Ticket t = new Ticket(null, passengerId, flightId, price, seatNumber);
+        service.save(t);
         return "redirect:/tickets";
     }
 

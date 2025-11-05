@@ -17,4 +17,8 @@ public class FlightService {
 
     public List<Flight> all() { return flights.findAll(); }
 
+    public Flight save(Flight f) {
+        return flights.save(f);
+    }
+
 }

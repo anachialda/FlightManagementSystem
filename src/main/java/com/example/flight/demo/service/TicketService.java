@@ -15,5 +15,6 @@ public class TicketService {
     }
     public boolean cancel(Long ticketId) { return tickets.delete(ticketId); }
 
+    public Ticket save(Ticket t) { return tickets.save(t); }
     public List<Ticket> all() { return tickets.findAll(); }
 }
