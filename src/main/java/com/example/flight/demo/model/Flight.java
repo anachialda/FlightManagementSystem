@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Flight {
+
+    private enum Status {
+        SCHEDULED,
+        CANCELLED,
+        COMPLETED,
+        IN_PROGRESS
+    }
+
     private Long id;
     private String name;        // e.g., "RO123"
     private Long noticeBoardId; // link
@@ -13,7 +21,7 @@ public class Flight {
     private LocalDateTime arrivalTime;
     private List<Long> tickets = new ArrayList<>();
     private List<Long> flightAssignments = new ArrayList<>();
-    private String status = "SCHEDULED"; //enum
+    private Status status = Status.SCHEDULED;
 
     public Flight() {}
 
@@ -40,7 +48,7 @@ public class Flight {
     public void setTickets(List<Long> tickets) { this.tickets = tickets; }
     public List<Long> getFlightAssignments() { return flightAssignments; }
     public void setFlightAssignments(List<Long> flightAssignments) { this.flightAssignments = flightAssignments; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 
 }

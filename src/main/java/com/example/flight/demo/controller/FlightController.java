@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/flights")
 public class FlightController {
     private final FlightService service;
-    private final FlightRepository repo; // for delete (simple)
+    private final FlightRepository repo;
 
     public FlightController(FlightService service, FlightRepository repo) {
         this.service = service;
@@ -35,7 +35,6 @@ public class FlightController {
         return "flight/form";
     }
 
-    // We accept strings for times and parse them with a simple formatter
     @PostMapping
     public String create(
             @RequestParam String name,

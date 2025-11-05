@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tickets")
 public class TicketController {
     private final TicketService service;
-    private final TicketRepository repo; // for delete
+    private final TicketRepository repo;
 
     public TicketController(TicketService service, TicketRepository repo) {
         this.service = service;

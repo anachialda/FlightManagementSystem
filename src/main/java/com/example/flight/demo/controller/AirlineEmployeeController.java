@@ -28,26 +28,26 @@ public class AirlineEmployeeController {
 
     @GetMapping("/new")
     public String form(Model model) {
-        model.addAttribute("employee", new AirlineEmployee()); // has name, role, licenseNumber, workStart
+        model.addAttribute("employee", new AirlineEmployee());
         return "airline-employee/form";
     }
 
     @PostMapping
     public String create(
             @RequestParam String name,
-            @RequestParam String role,
+            @RequestParam AirlineEmployee.Role role,
             @RequestParam(required = false) String licenseNumber,
             @RequestParam(required = false) String workStart,          // yyyy-MM-dd
-            @RequestParam(required = false, name = "assignments") String assignmentsCsv
+            @RequestParam(required = false, name = "assignments") String assignmentsCv
     ) {
         AirlineEmployee e = new AirlineEmployee();
-        e.setId(null);                 // auto-ID in repo
+        e.setId(null);
         e.setName(name);
         e.setRole(role);
         e.setLicenseNumber(licenseNumber);
 
         if (workStart != null && !workStart.isBlank()) {
-            e.setWorkStart(LocalDate.parse(workStart));   // HTML date input -> yyyy-MM-dd
+            e.setWorkStart(LocalDate.parse(workStart));
         }
 
         service.save(e);

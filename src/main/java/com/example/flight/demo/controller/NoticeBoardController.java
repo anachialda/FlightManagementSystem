@@ -31,9 +31,9 @@ public class NoticeBoardController {
 
     @PostMapping
     public String create(@RequestParam String date){
-        // date comes from <input type="date"> as yyyy-MM-dd
+
         NoticeBoard nb = new NoticeBoard();
-        nb.setId(null); // auto-ID
+        nb.setId(null);
         nb.setDate(LocalDate.parse(date));
         service.save(nb);
         return "redirect:/boards";
