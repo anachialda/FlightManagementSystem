@@ -47,7 +47,6 @@ public class FlightController {
         LocalDateTime dep = LocalDateTime.parse(departureTime, FORM_FMT);
         LocalDateTime arr = LocalDateTime.parse(arrivalTime, FORM_FMT);
         Flight f = new Flight(null, name, noticeBoardId, airplaneId, dep, arr);
-        //service.create(f); // validates times
         return "redirect:/flights";
     }
 

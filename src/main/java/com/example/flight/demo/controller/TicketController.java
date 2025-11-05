@@ -38,7 +38,6 @@ public class TicketController {
             @RequestParam Double price
     ) {
         Ticket t = new Ticket(null, passengerId, flightId, price, seatNumber);
-        //service.issue(t); // enforces seat uniqueness
         return "redirect:/tickets";
     }
 
