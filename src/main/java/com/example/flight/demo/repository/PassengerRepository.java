@@ -4,8 +4,9 @@ import com.example.flight.demo.model.Passenger;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PassengerRepository extends InMemoryRepository<Passenger> {
+public class PassengerRepository extends InFileRepository<Passenger> {
+
     public PassengerRepository() {
-        super(Passenger::getId, Passenger::setId);
+        super("passengers.json", Passenger.class);
     }
 }
