@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Airline Employee Form</title>
+</head>
+<body>
+<h1 th:text="${employee.id == null ? 'New Airline Employee' : 'Edit Airline Employee'}">
+    Airline Employee
+</h1>
+
+<form th:action="@{/airline-employees/save}" method="post" th:object="${employee}">
+    <!-- important hidden id -->
+    <input type="hidden" th:field="*{id}" />
+
+    <p>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required />
+    </p>
+
+    <p>
+        <label>Role:</label>
+        <select th:field="*{role}">
+            <option th:each="r : ${roles}"
+                    th:value="${r}"
+                    th:text="${r}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        <label>License Number:</label>
+        <input type="text" th:field="*{licenseNumber}" />
+    </p>
+
+    <p>
+        <label>Work Start:</label>
+        <input type="date" th:field="*{workStart}" />
+    </p>
+
+    <p>
+        <button type="submit">Save</button>
+        <a href="/airline-employees">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>

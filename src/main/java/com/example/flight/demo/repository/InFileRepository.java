@@ -2,6 +2,8 @@ package com.example.flight.demo.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -11,7 +13,9 @@ public class InFileRepository<T> implements CrudRepository<T> {
 
     private final Class<T> clazz;
     private final Path filePath;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     private final Map<String, T> data = new LinkedHashMap<>();
 
