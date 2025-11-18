@@ -5,20 +5,29 @@ import com.example.flight.demo.repository.PassengerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PassengerService {
-    private final PassengerRepository passengers;
 
-    public PassengerService(PassengerRepository passengers) {
-        this.passengers = passengers;
+    private final PassengerRepository repository;
+
+    public PassengerService(PassengerRepository repository) {
+        this.repository = repository;
     }
 
-    public Passenger save(Passenger p) { return passengers.save(p); }
-    public boolean delete(Long id) { return passengers.deleteById(id); }
-    public Optional<Passenger> find(Long id) { return passengers.findById(id); }
-    public List<Passenger> all() { return passengers.findAll(); }
+    public List<Passenger> findAll() {
+        return repository.findAll();
+    }
 
+    public Passenger findById(String id) {
+        return repository.findById(id);
+    }
 
+    public void save(Passenger passenger) {
+        repository.save(passenger);
+    }
+
+    public void delete(String id) {
+        repository.deleteById(id);
+    }
 }

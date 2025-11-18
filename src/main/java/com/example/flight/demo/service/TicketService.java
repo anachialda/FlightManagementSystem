@@ -8,13 +8,26 @@ import java.util.List;
 
 @Service
 public class TicketService {
-    private final TicketRepository tickets;
 
-    public TicketService(TicketRepository tickets) {
-        this.tickets = tickets;
+    private final TicketRepository repository;
+
+    public TicketService(TicketRepository repository) {
+        this.repository = repository;
     }
-    public boolean cancel(Long ticketId) { return tickets.deleteById(ticketId); }
 
-    public Ticket save(Ticket t) { return tickets.save(t); }
-    public List<Ticket> all() { return tickets.findAll(); }
+    public List<Ticket> findAll() {
+        return repository.findAll();
+    }
+
+    public Ticket findById(String id) {
+        return repository.findById(id);
+    }
+
+    public void save(Ticket ticket) {
+        repository.save(ticket);
+    }
+
+    public void delete(String id) {
+        repository.deleteById(id);
+    }
 }
