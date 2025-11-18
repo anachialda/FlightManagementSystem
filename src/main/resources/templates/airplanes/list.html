@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Airplanes</title>
-</head>
+<head><meta charset="UTF-8"><title>Airplanes</title></head>
 <body>
-<h1>Airplanes</h1>
 
+<h1>Airplanes</h1>
 <p><a href="/airplanes/new">Add Airplane</a></p>
 
 <table border="1" cellpadding="6">
@@ -19,11 +17,14 @@
     </thead>
     <tbody>
     <tr th:each="a : ${airplanes}">
-        <td th:text="${a.id}">1</td>
-        <td th:text="${a.number}">737</td>
-        <td th:text="${a.flights != null ? #strings.listJoin(a.flights, ', ') : ''}">1, 2, 3</td>
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.number}"></td>
+        <td th:text="${#strings.listJoin(a.flights, ', ')}"></td>
+
         <td>
-            <form th:action="@{'/airplanes/' + ${a.id} + '/delete'}" method="post">
+            <a th:href="@{'/airplanes/edit/' + ${a.id}}">Edit</a>
+            <form th:action="@{'/airplanes/delete/' + ${a.id}}"
+                  method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
