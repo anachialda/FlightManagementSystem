@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Tickets</title></head>
+<head><meta charset="UTF-8"><title>Tickets</title></head>
 <body>
+
 <h1>Tickets</h1>
-<p><a href="/tickets/new">Issue Ticket</a></p>
+<p><a href="/tickets/new">Add Ticket</a></p>
 
 <table border="1" cellpadding="6">
     <thead>
     <tr>
         <th>ID</th>
-        <th>PassengerId</th>
-        <th>FlightId</th>
-        <th>Seat</th>
+        <th>Passenger ID</th>
+        <th>Flight ID</th>
         <th>Price</th>
+        <th>Seat Number</th>
+        <th>Luggages</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="t : ${tickets}">
-        <td th:text="${t.id}">1</td>
-        <td th:text="${t.passengerId}">10</td>
-        <td th:text="${t.flightId}">1</td>
-        <td th:text="${t.seatNumber}">12A</td>
-        <td th:text="${t.price}">150.0</td>
+        <td th:text="${t.id}"></td>
+        <td th:text="${t.passengerId}"></td>
+        <td th:text="${t.flightId}"></td>
+        <td th:text="${t.price}"></td>
+        <td th:text="${t.seatNumber}"></td>
+        <td th:text="${#strings.listJoin(t.luggages, ', ')}"></td>
+
         <td>
-            <form th:action="@{'/tickets/' + ${t.id} + '/delete'}" method="post">
+            <a th:href="@{'/tickets/edit/' + ${t.id}}">Edit</a>
+            <form th:action="@{'/tickets/delete/' + ${t.id}}"
+                  method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

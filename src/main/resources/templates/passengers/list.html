@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Passengers</title>
-</head>
+<head><meta charset="UTF-8"><title>Passengers</title></head>
 <body>
-<h1>Passengers</h1>
 
+<h1>Passengers</h1>
 <p><a href="/passengers/new">Add Passenger</a></p>
 
 <table border="1" cellpadding="6">
@@ -16,20 +14,23 @@
         <th>Currency</th>
         <th>Email</th>
         <th>VIP</th>
+        <th>Tickets</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="p : ${passengers}">
-        <td th:text="${p.id}">1</td>
-        <td th:text="${p.name}">Anna</td>
-        <td th:text="${p.currency}">EUR</td>
-        <td th:text="${p.email}">anna@mail.com</td>
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.currency}"></td>
+        <td th:text="${p.email}"></td>
+        <td th:text="${p.vip}"></td>
+        <td th:text="${#strings.listJoin(p.tickets, ', ')}"></td>
+
         <td>
-            <input type="checkbox" th:checked="${p.vip}" disabled="disabled"/>
-        </td>
-        <td>
-            <form th:action="@{'/passengers/' + ${p.id} + '/delete'}" method="post">
+            <a th:href="@{'/passengers/edit/' + ${p.id}}">Edit</a>
+            <form th:action="@{'/passengers/delete/' + ${p.id}}"
+                  method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>

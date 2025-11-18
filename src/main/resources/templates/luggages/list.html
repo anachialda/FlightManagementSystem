@@ -7,29 +7,29 @@
 <p><a href="/luggage/new">Add Luggage</a></p>
 
 <table border="1" cellpadding="6">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Ticket ID</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="l : ${luggages}">
-        <td th:text="${l.id}"></td>
-        <td th:text="${l.ticketId}"></td>
-        <td th:text="${l.status}"></td>
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Ticket ID</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="l : ${luggages}">
+    <td th:text="${l.id}"></td>
+    <td th:text="${l.ticketId}"></td>
+    <td th:text="${l.status}"></td>
 
-        <td>
-            <a th:href="@{'/luggage/edit/' + ${l.id}}">Edit</a>
-            <form th:action="@{'/luggage/delete/' + ${l.id}}"
-                  method="post" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
+    <td>
+        <a th:href="@{'/luggage/edit/' + ${l.id}}">Edit</a>
+        <form th:action="@{'/luggage/delete/' + ${l.id}}"
+              method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </td>
+</tr>
+</tbody>
 </table>
 
 </body>

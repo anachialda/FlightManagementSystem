@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>New Passenger</title>
-</head>
+<head><meta charset="UTF-8"><title>Passenger</title></head>
 <body>
-<h1>New Passenger</h1>
 
-<form action="/passengers" method="post" th:object="${passenger}">
+<h1 th:text="${passenger.id == null ? 'New Passenger' : 'Edit Passenger'}"></h1>
 
-    <p>
-        <label>Name: </label>
-        <input th:field="*{name}" required/>
-    </p>
+<form th:action="@{/passengers/save}" th:object="${passenger}" method="post">
 
-    <p>
-        <label>Currency: </label>
-        <input th:field="*{currency}" required/>
-    </p>
+    <input type="hidden" th:field="*{id}" />
 
-    <p>
-        <label>Email: </label>
-        <input th:field="*{email}" type="email" required/>
-    </p>
+    <p><label>Name:</label>
+        <input type="text" th:field="*{name}" required /></p>
 
-    <p>
-        <label>VIP: </label>
-        <input th:field="*{vip}" type="checkbox"/>
-    </p>
+    <p><label>Currency:</label>
+        <input type="text" th:field="*{currency}" /></p>
 
-    <p>
-        <button type="submit">Create</button>
-        <a href="/passengers">Cancel</a>
-    </p>
+    <p><label>Email:</label>
+        <input type="email" th:field="*{email}" /></p>
+
+    <p><label>VIP:</label>
+        <input type="checkbox" th:field="*{vip}" /></p>
+
+    <p><button type="submit">Save</button>
+        <a href="/passengers">Cancel</a></p>
+
 </form>
 
 </body>
