@@ -5,17 +5,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NoticeBoard {
-    private Long id;
-    private LocalDate date;                  // Java time type ✔
-    private List<Long> flightsOfTheDay = new ArrayList<>(); // Flight IDs
 
-    public NoticeBoard() {}
-    public NoticeBoard(Long id, LocalDate date) { this.id = id; this.date = date; }
+    private String id;
+    private LocalDate date;
+    private List<String> flightsOfTheDay = new ArrayList<>(); // Flight IDs
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
-    public List<Long> getFlightsOfTheDay() { return flightsOfTheDay; }
-    public void setFlightsOfTheDay(List<Long> f) { this.flightsOfTheDay = f; }
+    public NoticeBoard() {
+    }
+
+    public NoticeBoard(String id, LocalDate date) {
+        this.id = id;
+        this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public List<String> getFlightsOfTheDay() {
+        return flightsOfTheDay;
+    }
+
+    public void setFlightsOfTheDay(List<String> flightsOfTheDay) {
+        this.flightsOfTheDay = flightsOfTheDay;
+    }
 }
