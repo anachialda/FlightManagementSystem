@@ -1,10 +1,100 @@
 [ {
-  "id" : "3b9ab4d5-d5e0-4998-baac-38ee6550babe",
-  "name" : "bali",
-  "noticeBoardId" : "067f3c9a-9928-409d-b4c0-3327c9d46e2d",
-  "airplaneId" : "28bc5150-e56c-4293-b4c8-dd7449d76122",
-  "departureTime" : "2013-09-29T12:34:00",
-  "arrivalTime" : "2013-09-29T14:56:00",
+  "id" : "df39b51a-a63f-4b93-82e3-825259534dcc",
+  "name" : "Cluj-Napoca → București",
+  "noticeBoardId" : "nb-001",
+  "airplaneId" : "ap-101",
+  "departureTime" : "2025-11-24T08:00:00",
+  "arrivalTime" : "2025-11-24T10:00:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "20c39358-ce5d-4097-afca-dc92affe0761",
+  "name" : "București → Paris",
+  "noticeBoardId" : "nb-002",
+  "airplaneId" : "ap-102",
+  "departureTime" : "2025-11-25T06:30:00",
+  "arrivalTime" : "2025-11-25T09:00:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "7b13ae5f-e796-4f09-b9db-4d76941054af",
+  "name" : "Paris → Londra",
+  "noticeBoardId" : "nb-003",
+  "airplaneId" : "ap-103",
+  "departureTime" : "2025-12-27T14:15:00",
+  "arrivalTime" : "2025-12-27T15:00:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "8415f11e-0108-4f26-a98b-1f8a330c7eef",
+  "name" : "Londra → New York",
+  "noticeBoardId" : "nb-004",
+  "airplaneId" : "ap-104",
+  "departureTime" : "2025-12-27T10:00:00",
+  "arrivalTime" : "2025-12-27T18:30:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "2414dc40-beaf-4927-a8ef-2c8ba9a2ebd1",
+  "name" : "Cluj-Napoca → Barcelona",
+  "noticeBoardId" : "nb-005",
+  "airplaneId" : "ap-105",
+  "departureTime" : "2025-11-21T10:00:00",
+  "arrivalTime" : "2025-11-21T14:00:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "953c0aee-6a85-49c2-9e59-ebd528103d55",
+  "name" : "Cluj-Napoca → Roma",
+  "noticeBoardId" : "nb-006",
+  "airplaneId" : "ap-106",
+  "departureTime" : "2025-12-30T12:30:00",
+  "arrivalTime" : "2025-12-30T13:30:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "5fd6ed66-fb42-48f2-8125-c3f262443d97",
+  "name" : "Paris → Firenze",
+  "noticeBoardId" : "nb-007",
+  "airplaneId" : "ap-107",
+  "departureTime" : "2025-01-31T19:30:00",
+  "arrivalTime" : "2025-01-31T21:00:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "35c5b40d-a3cd-406c-bd6c-91e49bd0e3c2",
+  "name" : "London → Norway",
+  "noticeBoardId" : "nb-008",
+  "airplaneId" : "ap-108",
+  "departureTime" : "2025-10-12T03:00:00",
+  "arrivalTime" : "2025-10-12T05:00:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "06fea745-e4b5-4b0f-bcfe-3a1386b051d5",
+  "name" : "Cluj-Napoca → Egypt",
+  "noticeBoardId" : "nb-009",
+  "airplaneId" : "ap-109",
+  "departureTime" : "2025-10-23T10:30:00",
+  "arrivalTime" : "2025-10-23T14:30:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+}, {
+  "id" : "437b39aa-05d7-46c0-9738-1f44ba4615fb",
+  "name" : "Paris → China",
+  "noticeBoardId" : "nb-010",
+  "airplaneId" : "ap-110",
+  "departureTime" : "2025-11-19T11:00:00",
+  "arrivalTime" : "2025-11-19T23:00:00",
   "tickets" : [ ],
   "flightAssignments" : [ ],
   "status" : "SCHEDULED"
