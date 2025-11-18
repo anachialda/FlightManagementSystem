@@ -1,14 +1,11 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.AirlineEmployee;
+import com.example.flight.demo.model.AirlineEmployee.Role;
 import com.example.flight.demo.service.AirlineEmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/airline-employees")
@@ -21,41 +18,47 @@ public class AirlineEmployeeController {
     }
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("employees", service.all());
-        return "airline-employee/index";
+    public String list(Model model) {
+        model.addAttribute("employees", service.findAll());
+        return "airlineEmployees/list";
     }
 
     @GetMapping("/new")
-    public String form(Model model) {
+    public String showCreateForm(Model model) {
         model.addAttribute("employee", new AirlineEmployee());
-        return "airline-employee/form";
+        model.addAttribute("roles", Role.values());
+        return "airlineEmployees/form";
     }
 
-    @PostMapping
-    public String create(
-            @RequestParam String name,
-            @RequestParam AirlineEmployee.Role role,
-            @RequestParam(required = false) String licenseNumber,
-            @RequestParam(required = false) String workStart,          // yyyy-MM-dd
-            @RequestParam(required = false, name = "assignments") String assignmentsCv
-    ) {
-        AirlineEmployee e = new AirlineEmployee();
-        e.setId(null);
-        e.setName(name);
-        e.setRole(role);
-        e.setLicenseNumber(licenseNumber);
-
-        if (workStart != null && !workStart.isBlank()) {
-            e.setWorkStart(LocalDate.parse(workStart));
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) {
+        AirlineEmployee employee = service.findById(id);
+        if (employee == null) {
+            return "redirect:/airline-employees";
         }
+        model.addAttribute("employee", employee);
+        model.addAttribute("roles", Role.values());
+        return "airlineEmployees/form";
+    }
 
-        service.save(e);
+    @PostMapping("/save")
+    public String save(@ModelAttribute AirlineEmployee employee) {
+        service.save(employee);
         return "redirect:/airline-employees";
     }
 
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable String id, Model model) {
+        AirlineEmployee employee = service.findById(id);
+        if (employee == null) {
+            return "redirect:/airline-employees";
+        }
+        model.addAttribute("employee", employee);
+        return "airlineEmployees/details";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable String id) {
         service.delete(id);
         return "redirect:/airline-employees";
     }
