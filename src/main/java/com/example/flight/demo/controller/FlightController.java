@@ -52,7 +52,7 @@ public class FlightController {
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
-        repo.delete(id);
+        repo.deleteById(id);
         return "redirect:/flights";
     }
 }
