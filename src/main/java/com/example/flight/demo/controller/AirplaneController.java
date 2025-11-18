@@ -9,29 +9,53 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/airplanes")
 public class AirplaneController {
+
     private final AirplaneService service;
-    public AirplaneController(AirplaneService service){ this.service = service; }
+
+    public AirplaneController(AirplaneService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public String index(Model model){
-        model.addAttribute("airplanes", service.all());
-        return "airplane/index";
+    public String list(Model model) {
+        model.addAttribute("airplanes", service.findAll());
+        return "airplanes/list";
     }
 
     @GetMapping("/new")
-    public String form(Model model){
+    public String showCreateForm(Model model) {
         model.addAttribute("airplane", new Airplane());
-        return "airplane/form";
+        return "airplanes/form";
     }
 
-    @PostMapping
-    public String create(@ModelAttribute Airplane airplane){
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) {
+        Airplane airplane = service.findById(id);
+        if (airplane == null) {
+            return "redirect:/airplanes";
+        }
+        model.addAttribute("airplane", airplane);
+        return "airplanes/form";
+    }
+
+    @PostMapping("/save")
+    public String save(@ModelAttribute Airplane airplane) {
         service.save(airplane);
         return "redirect:/airplanes";
     }
 
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id){
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable String id, Model model) {
+        Airplane airplane = service.findById(id);
+        if (airplane == null) {
+            return "redirect:/airplanes";
+        }
+        model.addAttribute("airplane", airplane);
+        return "airplanes/details";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable String id) {
         service.delete(id);
         return "redirect:/airplanes";
     }
