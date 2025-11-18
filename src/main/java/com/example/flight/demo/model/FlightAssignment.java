@@ -1,19 +1,41 @@
 package com.example.flight.demo.model;
 
 public class FlightAssignment {
-    private Long id;
-    private Long flightId;
-    private Long staffId; // AirlineEmployee or AirportEmployee ID
 
-    public FlightAssignment() {}
-    public FlightAssignment(Long id, Long flightId, Long staffId) {
-        this.id = id; this.flightId = flightId; this.staffId = staffId;
+    private String id;
+    private String flightId;
+    private String staffId; // AirlineEmployee or AirportEmployee ID
+
+    public FlightAssignment() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Long getFlightId() { return flightId; }
-    public void setFlightId(Long flightId) { this.flightId = flightId; }
-    public Long getStaffId() { return staffId; }
-    public void setStaffId(Long staffId) { this.staffId = staffId; }
+    public FlightAssignment(String id, String flightId, String staffId) {
+        this.id = id;
+        this.flightId = flightId;
+        this.staffId = staffId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(String flightId) {
+        this.flightId = flightId;
+    }
+
+    public String getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
+    }
 }
