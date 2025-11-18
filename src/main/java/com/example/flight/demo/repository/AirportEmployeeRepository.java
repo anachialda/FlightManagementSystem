@@ -4,8 +4,9 @@ import com.example.flight.demo.model.AirportEmployee;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AirportEmployeeRepository extends InMemoryRepository<AirportEmployee> {
+public class AirportEmployeeRepository extends InFileRepository<AirportEmployee> {
+
     public AirportEmployeeRepository() {
-        super(AirportEmployee::getId, AirportEmployee::setId);
+        super("airport_employees.json", AirportEmployee.class);
     }
 }
