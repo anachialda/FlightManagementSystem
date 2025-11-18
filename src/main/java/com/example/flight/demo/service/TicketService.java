@@ -13,7 +13,7 @@ public class TicketService {
     public TicketService(TicketRepository tickets) {
         this.tickets = tickets;
     }
-    public boolean cancel(Long ticketId) { return tickets.delete(ticketId); }
+    public boolean cancel(Long ticketId) { return tickets.deleteById(ticketId); }
 
     public Ticket save(Ticket t) { return tickets.save(t); }
     public List<Ticket> all() { return tickets.findAll(); }

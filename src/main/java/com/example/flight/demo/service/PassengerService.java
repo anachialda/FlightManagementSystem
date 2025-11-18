@@ -16,7 +16,7 @@ public class PassengerService {
     }
 
     public Passenger save(Passenger p) { return passengers.save(p); }
-    public boolean delete(Long id) { return passengers.delete(id); }
+    public boolean delete(Long id) { return passengers.deleteById(id); }
     public Optional<Passenger> find(Long id) { return passengers.findById(id); }
     public List<Passenger> all() { return passengers.findAll(); }
 

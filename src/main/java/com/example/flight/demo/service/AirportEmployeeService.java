@@ -5,18 +5,29 @@ import com.example.flight.demo.repository.AirportEmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AirportEmployeeService {
-    private final AirportEmployeeRepository employees;
 
-    public AirportEmployeeService(AirportEmployeeRepository employees) {
-        this.employees = employees;
+    private final AirportEmployeeRepository repository;
+
+    public AirportEmployeeService(AirportEmployeeRepository repository) {
+        this.repository = repository;
     }
 
-    public AirportEmployee save(AirportEmployee e) { return employees.save(e); }
-    public boolean delete(Long id) { return employees.delete(id); }
-    public Optional<AirportEmployee> find(Long id) { return employees.findById(id); }
-    public List<AirportEmployee> all() { return employees.findAll(); }
+    public List<AirportEmployee> findAll() {
+        return repository.findAll();
+    }
+
+    public AirportEmployee findById(String id) {
+        return repository.findById(id);
+    }
+
+    public void save(AirportEmployee employee) {
+        repository.save(employee);
+    }
+
+    public void delete(String id) {
+        repository.deleteById(id);
+    }
 }
