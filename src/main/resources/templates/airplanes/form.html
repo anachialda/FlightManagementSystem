@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Airplane</title></head>
+<body>
+
+<h1 th:text="${airplane.id == null ? 'New Airplane' : 'Edit Airplane'}"></h1>
+
+<form th:action="@{/airplanes/save}" th:object="${airplane}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <p><label>Number:</label>
+        <input type="number" th:field="*{number}" required /></p>
+
+    <p>
+        <button type="submit">Save</button>
+        <a href="/airplanes">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>

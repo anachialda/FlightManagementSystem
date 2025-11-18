@@ -1,1 +1,11 @@
-[]
+[ {
+  "id" : "3b9ab4d5-d5e0-4998-baac-38ee6550babe",
+  "name" : "bali",
+  "noticeBoardId" : "067f3c9a-9928-409d-b4c0-3327c9d46e2d",
+  "airplaneId" : "28bc5150-e56c-4293-b4c8-dd7449d76122",
+  "departureTime" : "2013-09-29T12:34:00",
+  "arrivalTime" : "2013-09-29T14:56:00",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "status" : "SCHEDULED"
+} ]

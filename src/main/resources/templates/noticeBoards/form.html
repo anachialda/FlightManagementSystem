@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Notice Board</title></head>
+<body>
+
+<h1 th:text="${noticeBoard.id == null ? 'New Notice Board' : 'Edit Notice Board'}"></h1>
+
+<form th:action="@{/notice-boards/save}" th:object="${noticeBoard}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <p><label>Date:</label>
+        <input type="date" th:field="*{date}" required /></p>
+
+    <p><button type="submit">Save</button>
+        <a href="/notice-boards">Cancel</a></p>
+</form>
+
+</body>
+</html>

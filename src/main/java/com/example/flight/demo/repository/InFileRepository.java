@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.JavaType;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -34,7 +35,14 @@ public class InFileRepository<T> implements CrudRepository<T> {
             }
 
             String json = Files.readString(filePath);
-            List<T> list = objectMapper.readValue(json, new TypeReference<List<T>>() {});
+            if (json == null || json.isBlank()) {
+                json = "[]";
+            }
+
+            // IMPORTANT: tell Jackson the concrete type T
+            JavaType type = objectMapper.getTypeFactory()
+                    .constructCollectionType(List.class, clazz);
+            List<T> list = objectMapper.readValue(json, type);
 
             data.clear();
             for (T item : list) {
@@ -47,11 +55,19 @@ public class InFileRepository<T> implements CrudRepository<T> {
         }
     }
 
-    private void save() {
+    private void saveToFile() {
         try {
             List<T> list = new ArrayList<>(data.values());
-            String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-            Files.writeString(filePath, json, StandardOpenOption.TRUNCATE_EXISTING);
+            String json = objectMapper.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(list);
+
+            Files.writeString(
+                    filePath,
+                    json,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.CREATE
+            );
+
         } catch (IOException e) {
             throw new RuntimeException("Failed to write file: " + filePath, e);
         }
@@ -97,12 +113,12 @@ public class InFileRepository<T> implements CrudRepository<T> {
         }
 
         data.put(id, entity);
-        save();
+        saveToFile();
     }
 
     @Override
     public void deleteById(String id) {
         data.remove(id);
-        save();
+        saveToFile();
     }
 }

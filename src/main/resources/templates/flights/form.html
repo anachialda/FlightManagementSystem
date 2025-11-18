@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Flight</title></head>
+<body>
+
+<h1 th:text="${flight.id == null ? 'New Flight' : 'Edit Flight'}"></h1>
+
+<form th:action="@{/flights/save}" th:object="${flight}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <p><label>Name:</label>
+        <input type="text" th:field="*{name}" required /></p>
+
+    <p><label>Airplane ID:</label>
+        <input type="text" th:field="*{airplaneId}" required /></p>
+
+    <p><label>NoticeBoard ID:</label>
+        <input type="text" th:field="*{noticeBoardId}" required /></p>
+
+    <p><label>Departure Time:</label>
+        <input type="datetime-local" th:field="*{departureTime}" /></p>
+
+    <p><label>Arrival Time:</label>
+        <input type="datetime-local" th:field="*{arrivalTime}" /></p>
+
+    <p><label>Status:</label>
+        <input type="text" th:field="*{status}" /></p>
+
+    <p><button type="submit">Save</button>
+        <a href="/flights">Cancel</a></p>
+
+</form>
+
+</body>
+</html>
