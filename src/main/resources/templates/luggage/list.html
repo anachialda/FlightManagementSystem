@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Luggage</title></head>
+<head><meta charset="UTF-8"><title>Luggage</title></head>
 <body>
+
 <h1>Luggage</h1>
 <p><a href="/luggage/new">Add Luggage</a></p>
 
@@ -9,23 +10,27 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>TicketId</th>
+        <th>Ticket ID</th>
         <th>Status</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="l : ${luggages}">
-        <td th:text="${l.id}">1</td>
-        <td th:text="${l.ticketId}">10</td>
-        <td th:text="${l.status}">Checked-In</td>
+        <td th:text="${l.id}"></td>
+        <td th:text="${l.ticketId}"></td>
+        <td th:text="${l.status}"></td>
+
         <td>
-            <form th:action="@{'/luggage/' + ${l.id} + '/delete'}" method="post">
+            <a th:href="@{'/luggage/edit/' + ${l.id}}">Edit</a>
+            <form th:action="@{'/luggage/delete/' + ${l.id}}"
+                  method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>
