@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/luggage")
 public class LuggageController {
+
     private final LuggageService service;
 
     public LuggageController(LuggageService service) {
@@ -16,26 +17,45 @@ public class LuggageController {
     }
 
     @GetMapping
-    public String index(Model model){
-        model.addAttribute("luggages", service.all());
-        return "luggage/index";
+    public String list(Model model) {
+        model.addAttribute("luggages", service.findAll());
+        return "luggage/list";
     }
 
     @GetMapping("/new")
-    public String form(Model model){
+    public String showCreateForm(Model model) {
         model.addAttribute("luggage", new Luggage());
         return "luggage/form";
     }
 
-    @PostMapping
-    public String create(@ModelAttribute Luggage luggage){
-        luggage.setId(null); // auto-ID
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) {
+        Luggage luggage = service.findById(id);
+        if (luggage == null) {
+            return "redirect:/luggage";
+        }
+        model.addAttribute("luggage", luggage);
+        return "luggage/form";
+    }
+
+    @PostMapping("/save")
+    public String save(@ModelAttribute Luggage luggage) {
         service.save(luggage);
         return "redirect:/luggage";
     }
 
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id){
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable String id, Model model) {
+        Luggage luggage = service.findById(id);
+        if (luggage == null) {
+            return "redirect:/luggage";
+        }
+        model.addAttribute("luggage", luggage);
+        return "luggage/details";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable String id) {
         service.delete(id);
         return "redirect:/luggage";
     }

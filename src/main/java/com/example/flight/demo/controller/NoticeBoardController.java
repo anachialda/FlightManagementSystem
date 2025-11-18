@@ -6,11 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @Controller
-@RequestMapping("/boards")
+@RequestMapping("/notice-boards")
 public class NoticeBoardController {
+
     private final NoticeBoardService service;
 
     public NoticeBoardController(NoticeBoardService service) {
@@ -18,30 +17,46 @@ public class NoticeBoardController {
     }
 
     @GetMapping
-    public String index(Model model){
-        model.addAttribute("boards", service.all());
-        return "board/index";
+    public String list(Model model) {
+        model.addAttribute("noticeBoards", service.findAll());
+        return "noticeBoards/list";
     }
 
     @GetMapping("/new")
-    public String form(Model model){
-        model.addAttribute("board", new NoticeBoard());
-        return "board/form";
+    public String showCreateForm(Model model) {
+        model.addAttribute("noticeBoard", new NoticeBoard());
+        return "noticeBoards/form";
     }
 
-    @PostMapping
-    public String create(@RequestParam String date){
-
-        NoticeBoard nb = new NoticeBoard();
-        nb.setId(null);
-        nb.setDate(LocalDate.parse(date));
-        service.save(nb);
-        return "redirect:/boards";
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Model model) {
+        NoticeBoard noticeBoard = service.findById(id);
+        if (noticeBoard == null) {
+            return "redirect:/notice-boards";
+        }
+        model.addAttribute("noticeBoard", noticeBoard);
+        return "noticeBoards/form";
     }
 
-    @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id){
+    @PostMapping("/save")
+    public String save(@ModelAttribute NoticeBoard noticeBoard) {
+        service.save(noticeBoard);
+        return "redirect:/notice-boards";
+    }
+
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable String id, Model model) {
+        NoticeBoard noticeBoard = service.findById(id);
+        if (noticeBoard == null) {
+            return "redirect:/notice-boards";
+        }
+        model.addAttribute("noticeBoard", noticeBoard);
+        return "noticeBoards/details";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable String id) {
         service.delete(id);
-        return "redirect:/boards";
+        return "redirect:/notice-boards";
     }
 }
