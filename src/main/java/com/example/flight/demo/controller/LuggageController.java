@@ -18,7 +18,7 @@ public class LuggageController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("luggages", service.findAll());
+        model.addAttribute("luggage", service.findAll());
         return "luggage/list";
     }
 
