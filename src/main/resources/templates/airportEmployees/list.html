@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Airport Employees</title></head>
+<head><meta charset="UTF-8"><title>Airport Employees</title></head>
 <body>
+
 <h1>Airport Employees</h1>
+
 <p><a href="/airport-employees/new">Add Airport Employee</a></p>
 
 <table border="1" cellpadding="6">
     <thead>
     <tr>
         <th>ID</th>
+        <th>Name</th>
+        <th>Designation</th>
         <th>Department</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="e : ${employees}">
-        <td th:text="${e.id}">1</td>
-        <td th:text="${e.department}">Security</td>
+        <td th:text="${e.id}"></td>
+        <td th:text="${e.name}"></td>
+        <td th:text="${e.designation}"></td>
+        <td th:text="${e.department}"></td>
+
         <td>
-            <form th:action="@{'/airport-employees/' + ${e.id} + '/delete'}" method="post">
+            <!-- EDIT BUTTON -->
+            <a th:href="@{'/airport-employees/edit/' + ${e.id}}">Edit</a>
+
+            <!-- DELETE BUTTON -->
+            <form th:action="@{'/airport-employees/delete/' + ${e.id}}"
+                  method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>
