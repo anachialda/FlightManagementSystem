@@ -9,28 +9,28 @@
   "id" : "a-101",
   "name" : "Anamaria Pop",
   "role" : "COPILOT",
-  "assignments" : [ ],
+  "assignments" : [ "-" ],
   "licenseNumber" : null,
   "workStart" : null
 }, {
   "id" : "a-102",
   "name" : "Silviu Stanca",
   "role" : "ENGINEER",
-  "assignments" : [ ],
+  "assignments" : [ "work"],
   "licenseNumber" : null,
   "workStart" : null
 }, {
   "id" : "a-103",
   "name" : "Elena Dumbrava",
   "role" : "GROUND_STAFF",
-  "assignments" : [ ],
+  "assignments" : [ "work"],
   "licenseNumber" : null,
   "workStart" : null
 }, {
   "id" : "a-104",
   "name" : "Mihai Coman",
   "role" : "PILOT",
-  "assignments" : [ ],
+  "assignments" : [ "work"],
   "licenseNumber" : null,
   "workStart" : null
 }, {
@@ -44,28 +44,28 @@
   "id" : "a-105",
   "name" : "Carla Zdrenghea",
   "role" : "FLIGHT_ATTENDANT",
-  "assignments" : [ ],
+  "assignments" : [ "work"],
   "licenseNumber" : null,
   "workStart" : null
 }, {
   "id" : "a-107",
   "name" : "Maria Ionescu",
   "role" : "COPILOT",
-  "assignments" : [ ],
+  "assignments" : [ "-"],
   "licenseNumber" : null,
   "workStart" : null
 }, {
   "id" : "a-108",
   "name" : "Johann Müller",
   "role" : "ENGINEER",
-  "assignments" : [ ],
+  "assignments" : ["work" ],
   "licenseNumber" : null,
   "workStart" : null
 }, {
   "id" : "a-109",
   "name" : "Maria Andrei",
   "role" : "MECHANIC",
-  "assignments" : [ ],
+  "assignments" : [ "work"],
   "licenseNumber" : null,
   "workStart" : null
 } ]
