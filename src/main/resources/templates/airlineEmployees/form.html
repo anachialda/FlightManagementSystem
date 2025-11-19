@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Airport Employees</title></head>
+<head>
+    <title>Airline Employee Form</title>
+</head>
 <body>
 
-<h1>Airport Employees</h1>
-<p><a href="/airport-employees/new">Add Airport Employee</a></p>
+<h1>Airline Employee</h1>
 
-<table border="1" cellpadding="6">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Designation</th>
-        <th>Department</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="e : ${employees}">
-        <td th:text="${e.id}"></td>
-        <td th:text="${e.name}"></td>
-        <td th:text="${e.designation}"></td>
-        <td th:text="${e.department}"></td>
+<form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
 
-        <td>
-            <a th:href="@{'/airport-employees/edit/' + ${e.id}}">Edit</a>
-            <form th:action="@{'/airport-employees/delete/' + ${e.id}}"
-                  method="post" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <p>
+        <label>ID:</label>
+        <input type="text" th:field="*{id}" readonly="readonly" th:if="${employee.id != null}">
+        <input type="text" th:field="*{id}" th:if="${employee.id == null}">
+    </p>
+
+    <p>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required>
+    </p>
+
+    <p>
+        <label>Role:</label>
+        <select th:field="*{role}">
+            <option th:each="r : ${roles}"
+                    th:value="${r}"
+                    th:text="${r}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        <button type="submit">Save</button>
+    </p>
+</form>
+
+<p>
+    <a href="/airline-employees">Back to List</a>
+</p>
 
 </body>
 </html>

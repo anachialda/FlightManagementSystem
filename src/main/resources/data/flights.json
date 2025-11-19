@@ -3,11 +3,11 @@
   "name" : "Cluj-Napoca → București",
   "noticeBoardId" : "nb-001",
   "airplaneId" : "ap-101",
-  "departureTime" : "2025-11-24T08:00:00",
-  "arrivalTime" : "2025-11-24T10:00:00",
+  "departureTime" : null,
+  "arrivalTime" : null,
   "tickets" : [ ],
   "flightAssignments" : [ ],
-  "status" : "SCHEDULED"
+  "status" : "CANCELLED"
 }, {
   "id" : "20c39358-ce5d-4097-afca-dc92affe0761",
   "name" : "București → Paris",
