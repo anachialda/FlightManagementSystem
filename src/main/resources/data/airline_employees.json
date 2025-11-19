@@ -1,1 +1,36 @@
-[]
+[ {
+  "id" : "a-100",
+  "name" : "Marc Stefan",
+  "role" : "PILOT",
+  "assignments" : [ ],
+  "licenseNumber" : null,
+  "workStart" : null
+}, {
+  "id" : "a-101",
+  "name" : "Anamaria Pop",
+  "role" : "COPILOT",
+  "assignments" : [ ],
+  "licenseNumber" : null,
+  "workStart" : null
+}, {
+  "id" : "a-102",
+  "name" : "Silviu Stanca",
+  "role" : "ENGINEER",
+  "assignments" : [ ],
+  "licenseNumber" : null,
+  "workStart" : null
+}, {
+  "id" : "a-103",
+  "name" : "Elena Dumbrava",
+  "role" : "GROUND_STAFF",
+  "assignments" : [ ],
+  "licenseNumber" : null,
+  "workStart" : null
+}, {
+  "id" : "a-104",
+  "name" : "Mihai Coman",
+  "role" : "PILOT",
+  "assignments" : [ ],
+  "licenseNumber" : null,
+  "workStart" : null
+} ]
