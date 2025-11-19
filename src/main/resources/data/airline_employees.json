@@ -37,7 +37,7 @@
   "id" : "a-106",
   "name" : "Alex Mic",
   "role" : "MECHANIC",
-  "assignments" : [ ],
+  "assignments" : ["work" ],
   "licenseNumber" : null,
   "workStart" : null
 }, {
