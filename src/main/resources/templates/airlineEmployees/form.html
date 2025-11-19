@@ -1,43 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Airline Employee Form</title>
-</head>
+<head><meta charset="UTF-8"><title>Airline Employee</title></head>
 <body>
 
-<h1>Airline Employee</h1>
+<h1 th:text="${employee.id == null ? 'New Airline Employee' : 'Edit Airline Employee'}"></h1>
 
 <form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
 
-    <p>
-        <label>ID:</label>
-        <input type="text" th:field="*{id}" readonly="readonly" th:if="${employee.id != null}">
-        <input type="text" th:field="*{id}" th:if="${employee.id == null}">
-    </p>
+    <input type="hidden" th:field="*{id}" />
 
-    <p>
-        <label>Name:</label>
-        <input type="text" th:field="*{name}" required>
-    </p>
+    <p><label>Name:</label>
+        <input type="text" th:field="*{name}" required /></p>
 
-    <p>
-        <label>Role:</label>
+    <p><label>Role:</label>
         <select th:field="*{role}">
-            <option th:each="r : ${roles}"
-                    th:value="${r}"
-                    th:text="${r}">
-            </option>
+            <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
         </select>
     </p>
 
+    <p><label>License Number:</label>
+        <input type="text" th:field="*{licenseNumber}" /></p>
+
+    <p><label>Work Start:</label>
+        <input type="date" th:field="*{workStart}" /></p>
+
+    <!-- assignments usually managed elsewhere; we just show them on the list page -->
+
     <p>
         <button type="submit">Save</button>
+        <a href="/airline-employees">Cancel</a>
     </p>
-</form>
 
-<p>
-    <a href="/airline-employees">Back to List</a>
-</p>
+</form>
 
 </body>
 </html>

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Airline Employees</title>
-</head>
+<head><meta charset="UTF-8"><title>Airline Employees</title></head>
 <body>
 
 <h1>Airline Employees</h1>
@@ -18,21 +15,23 @@
         <th>Role</th>
         <th>License Number</th>
         <th>Work Start</th>
-        <th>Assignments</th>
+        <th>Assignments (IDs)</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="e : ${employees}">
-        <td th:text="${e.id}">1</td>
-        <td th:text="${e.name}">Jane Doe</td>
-        <td th:text="${e.role}">PILOT</td>
-        <td th:text="${e.licenseNumber}">ABC-123</td>
-        <td th:text="${e.workStart}">2025-11-01</td>
-        <td th:text="${e.assignments != null ? #strings.listJoin(e.assignments, ', ') : ''}">1, 3</td>
+        <td th:text="${e.id}"></td>
+        <td th:text="${e.name}"></td>
+        <td th:text="${e.role}"></td>
+        <td th:text="${e.licenseNumber}"></td>
+        <td th:text="${e.workStart}"></td>
+        <td th:text="${e.assignments != null ? #strings.listJoin(e.assignments, ', ') : ''}"></td>
+
         <td>
             <a th:href="@{'/airline-employees/edit/' + ${e.id}}">Edit</a>
-            <form th:action="@{'/airline-employees/delete/' + ${e.id}}" method="post" style="display:inline;">
+            <form th:action="@{'/airline-employees/delete/' + ${e.id}}"
+                  method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
