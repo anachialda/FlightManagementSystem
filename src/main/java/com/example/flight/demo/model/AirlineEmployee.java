@@ -1,9 +1,13 @@
 package com.example.flight.demo.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("AIRLINE")
 public class AirlineEmployee extends Staff {
 
     public enum Role {
@@ -15,17 +19,27 @@ public class AirlineEmployee extends Staff {
         GROUND_STAFF
     }
 
+    @Enumerated(EnumType.STRING)
     private Role role;
-    // Store IDs of FlightAssignment as String
+
+    // Store IDs of FlightAssignment as String → we keep that, but now map it as a separate table
+    @ElementCollection
+    @CollectionTable(
+            name = "airline_employee_assignments",
+            joinColumns = @JoinColumn(name = "airline_employee_id")
+    )
+    @Column(name = "assignment_id")
     private List<String> assignments = new ArrayList<>();
+
     private String licenseNumber;
+
     private LocalDate workStart;
 
     public AirlineEmployee() {
     }
 
-    public AirlineEmployee(String id, String name, Role role) {
-        super(id, name);
+    public AirlineEmployee(String name, Role role) {
+        super(name);
         this.role = role;
     }
 

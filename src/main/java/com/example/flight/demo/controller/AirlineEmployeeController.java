@@ -31,7 +31,7 @@ public class AirlineEmployeeController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model) {
         AirlineEmployee employee = service.findById(id);
         if (employee == null) {
             return "redirect:/airline-employees";
@@ -43,12 +43,13 @@ public class AirlineEmployeeController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute AirlineEmployee employee) {
+        // If employee.getId() == null → INSERT, otherwise UPDATE
         service.save(employee);
         return "redirect:/airline-employees";
     }
 
     @GetMapping("/details/{id}")
-    public String details(@PathVariable String id, Model model) {
+    public String details(@PathVariable Long id, Model model) {
         AirlineEmployee employee = service.findById(id);
         if (employee == null) {
             return "redirect:/airline-employees";
@@ -58,7 +59,7 @@ public class AirlineEmployeeController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable String id) {
+    public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/airline-employees";
     }

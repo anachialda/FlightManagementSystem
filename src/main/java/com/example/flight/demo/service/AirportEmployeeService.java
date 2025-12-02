@@ -19,15 +19,16 @@ public class AirportEmployeeService {
         return repository.findAll();
     }
 
-    public AirportEmployee findById(String id) {
-        return repository.findById(id);
+    public AirportEmployee findById(Long id) {
+        return repository.findById(id)
+                .orElse(null);
     }
 
-    public void save(AirportEmployee employee) {
-        repository.save(employee);
+    public AirportEmployee save(AirportEmployee employee) {
+        return repository.save(employee);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }
