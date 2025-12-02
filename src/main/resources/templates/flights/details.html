@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flight Details</title>
+</head>
+<body>
+
+<h1>Flight Details</h1>
+
+<p><strong>ID:</strong> <span th:text="${flight.id}"></span></p>
+<p><strong>Name:</strong> <span th:text="${flight.name}"></span></p>
+<p><strong>Status:</strong> <span th:text="${flight.status}"></span></p>
+<p><strong>Airplane ID:</strong> <span th:text="${flight.airplaneId}"></span></p>
+
+<p><strong>Departure:</strong> <span th:text="${flight.departureTime}"></span></p>
+<p><strong>Arrival:</strong> <span th:text="${flight.arrivalTime}"></span></p>
+
+<p><strong>Tickets:</strong>
+    <span th:each="t : ${flight.tickets}" th:text="${t + ' '}"></span>
+</p>
+
+<p><strong>Assignments:</strong>
+    <span th:each="a : ${flight.flightAssignments}" th:text="${a + ' '}"></span>
+</p>
+
+<a th:href="@{/flights}">Back</a>
+<a th:href="@{/flights/edit/{id}(id=${flight.id})}">Edit</a>
+
+</body>
+</html>

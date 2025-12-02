@@ -1,36 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Flight</title></head>
+<head>
+    <title>Flight Form</title>
+</head>
 <body>
 
-<h1 th:text="${flight.id == null ? 'New Flight' : 'Edit Flight'}"></h1>
+<h1 th:text="${flight.id == null} ? 'Add Flight' : 'Edit Flight'"></h1>
 
 <form th:action="@{/flights/save}" th:object="${flight}" method="post">
+    <input type="hidden" th:field="*{id}"/>
 
-    <input type="hidden" th:field="*{id}" />
+    <label>Flight Name:</label>
+    <input type="text" th:field="*{name}" required /><br/><br/>
 
-    <p><label>Name:</label>
-        <input type="text" th:field="*{name}" required /></p>
+    <label>Notice Board ID:</label>
+    <input type="text" th:field="*{noticeBoardId}" /><br/><br/>
 
-    <p><label>Airplane ID:</label>
-        <input type="text" th:field="*{airplaneId}" required /></p>
+    <label>Airplane ID:</label>
+    <input type="number" th:field="*{airplaneId}" /><br/><br/>
 
-    <p><label>NoticeBoard ID:</label>
-        <input type="text" th:field="*{noticeBoardId}" required /></p>
+    <label>Departure Time:</label>
+    <input type="datetime-local" th:field="*{departureTime}" /><br/><br/>
 
-    <p><label>Departure Time:</label>
-        <input type="datetime-local" th:field="*{departureTime}" /></p>
+    <label>Arrival Time:</label>
+    <input type="datetime-local" th:field="*{arrivalTime}" /><br/><br/>
 
-    <p><label>Arrival Time:</label>
-        <input type="datetime-local" th:field="*{arrivalTime}" /></p>
+    <label>Status:</label>
+    <select th:field="*{status}">
+        <option th:each="s : ${statuses}"
+                th:value="${s}"
+                th:text="${s}">
+        </option>
+    </select>
+    <br/><br/>
 
-    <p><label>Status:</label>
-        <input type="text" th:field="*{status}" /></p>
+    <label>Tickets (comma separated):</label>
+    <input type="text"
+           th:value="${flight.tickets != null ? #strings.arrayJoin(flight.tickets, ', ') : ''}"
+           name="ticketsInput"/><br/><br/>
 
-    <p><button type="submit">Save</button>
-        <a href="/flights">Cancel</a></p>
+    <label>Flight Assignments (comma separated):</label>
+    <input type="text"
+           th:value="${flight.flightAssignments != null ? #strings.arrayJoin(flight.flightAssignments, ', ') : ''}"
+           name="assignmentsInput"/><br/><br/>
 
+    <button type="submit">Save</button>
 </form>
+
+<a th:href="@{/flights}">Back to list</a>
 
 </body>
 </html>
