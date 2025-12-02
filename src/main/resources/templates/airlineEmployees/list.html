@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Airline Employees</title></head>
+<head>
+    <title>Airline Employees</title>
+</head>
 <body>
 
 <h1>Airline Employees</h1>
 
-<p><a href="/airline-employees/new">Add Airline Employee</a></p>
+<a th:href="@{/airline-employees/new}">➕ Add New Employee</a>
 
-<table border="1" cellpadding="6">
-    <thead>
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Role</th>
         <th>License Number</th>
-        <th>Work Start</th>
-        <th>Assignments (IDs)</th>
+        <th>Start Date</th>
         <th>Actions</th>
     </tr>
-    </thead>
-    <tbody>
-    <tr th:each="e : ${employees}">
-        <td th:text="${e.id}"></td>
-        <td th:text="${e.name}"></td>
-        <td th:text="${e.role}"></td>
-        <td th:text="${e.licenseNumber}"></td>
-        <td th:text="${e.workStart}"></td>
-        <td th:text="${e.assignments != null ? #strings.listJoin(e.assignments, ', ') : ''}"></td>
+
+    <tr th:each="emp : ${employees}">
+        <td th:text="${emp.id}"></td>
+        <td th:text="${emp.name}"></td>
+        <td th:text="${emp.role}"></td>
+        <td th:text="${emp.licenseNumber}"></td>
+        <td th:text="${emp.workStart}"></td>
 
         <td>
-            <a th:href="@{'/airline-employees/edit/' + ${e.id}}">Edit</a>
-            <form th:action="@{'/airline-employees/delete/' + ${e.id}}"
-                  method="post" style="display:inline;">
+            <a th:href="@{/airline-employees/details/{id}(id=${emp.id})}">Details</a>
+            <a th:href="@{/airline-employees/edit/{id}(id=${emp.id})}">Edit</a>
+
+            <form th:action="@{/airline-employees/delete/{id}(id=${emp.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
-    </tbody>
+
 </table>
 
 </body>

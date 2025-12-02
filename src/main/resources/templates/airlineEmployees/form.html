@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Airline Employee</title></head>
+<head>
+    <title>Airline Employee Form</title>
+</head>
 <body>
 
-<h1 th:text="${employee.id == null ? 'New Airline Employee' : 'Edit Airline Employee'}"></h1>
+<h1 th:text="${employee.id == null} ? 'Add Airline Employee' : 'Edit Airline Employee'"></h1>
 
 <form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
 
-    <input type="hidden" th:field="*{id}" />
+    <!-- Hidden ID for editing -->
+    <input type="hidden" th:field="*{id}"/>
 
-    <p><label>Name:</label>
-        <input type="text" th:field="*{name}" required /></p>
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required/><br/><br/>
 
-    <p><label>Role:</label>
-        <select th:field="*{role}">
-            <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
-        </select>
-    </p>
+    <label>Role:</label>
+    <select th:field="*{role}">
+        <option th:each="r : ${roles}"
+                th:value="${r}"
+                th:text="${r}">
+        </option>
+    </select>
+    <br/><br/>
 
-    <p><label>License Number:</label>
-        <input type="text" th:field="*{licenseNumber}" /></p>
+    <label>License Number:</label>
+    <input type="text" th:field="*{licenseNumber}"/><br/><br/>
 
-    <p><label>Work Start:</label>
-        <input type="date" th:field="*{workStart}" /></p>
+    <label>Work Start Date:</label>
+    <input type="date" th:field="*{workStart}"/><br/><br/>
 
+    <label>Assignments (comma separated):</label>
+    <input type="text"
+           th:value="${employee.assignments != null ? #strings.arrayJoin(employee.assignments, ', ') : ''}"
+           name="assignmentsInput"/>
+    <br/><br/>
 
-    <p>
-        <button type="submit">Save</button>
-        <a href="/airline-employees">Cancel</a>
-    </p>
-
+    <button type="submit">Save</button>
 </form>
+
+<a th:href="@{/airline-employees}">Back to list</a>
 
 </body>
 </html>

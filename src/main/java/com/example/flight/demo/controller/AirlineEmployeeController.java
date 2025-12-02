@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping("/airline-employees")
 public class AirlineEmployeeController {
@@ -42,8 +45,16 @@ public class AirlineEmployeeController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute AirlineEmployee employee) {
-        // If employee.getId() == null → INSERT, otherwise UPDATE
+    public String save(@ModelAttribute AirlineEmployee employee,
+                       @RequestParam(required = false) String assignmentsInput) {
+
+        if (assignmentsInput != null && !assignmentsInput.isBlank()) {
+            List<String> assignments = Arrays.stream(assignmentsInput.split(","))
+                    .map(String::trim)
+                    .toList();
+            employee.setAssignments(assignments);
+        }
+
         service.save(employee);
         return "redirect:/airline-employees";
     }
