@@ -29,33 +29,41 @@ public class AirplaneController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model) {
         Airplane airplane = service.findById(id);
-        if (airplane == null) {
-            return "redirect:/airplanes";
-        }
+        if (airplane == null) return "redirect:/airplanes";
+
         model.addAttribute("airplane", airplane);
         return "airplanes/form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Airplane airplane) {
+    public String save(@ModelAttribute Airplane airplane,
+                       @RequestParam(required = false) String flightsInput) {
+
+        if (flightsInput != null && !flightsInput.isBlank()) {
+            airplane.setFlights(
+                    java.util.Arrays.stream(flightsInput.split(","))
+                            .map(String::trim)
+                            .toList()
+            );
+        }
+
         service.save(airplane);
         return "redirect:/airplanes";
     }
 
     @GetMapping("/details/{id}")
-    public String details(@PathVariable String id, Model model) {
+    public String details(@PathVariable Long id, Model model) {
         Airplane airplane = service.findById(id);
-        if (airplane == null) {
-            return "redirect:/airplanes";
-        }
+        if (airplane == null) return "redirect:/airplanes";
+
         model.addAttribute("airplane", airplane);
         return "airplanes/details";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable String id) {
+    public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/airplanes";
     }

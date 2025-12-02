@@ -19,15 +19,15 @@ public class AirplaneService {
         return repository.findAll();
     }
 
-    public Airplane findById(String id) {
-        return repository.findById(id);
+    public Airplane findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
-    public void save(Airplane airplane) {
-        repository.save(airplane);
+    public Airplane save(Airplane airplane) {
+        return repository.save(airplane);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

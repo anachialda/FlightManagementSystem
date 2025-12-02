@@ -1,28 +1,30 @@
 package com.example.flight.demo.model;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Airplane {
 
-    private String id;
-    private int number;                     // plane number
-    private List<String> flights = new ArrayList<>(); // Flight IDs
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Airplane() {
-    }
+    private int number;
 
-    public Airplane(String id, int number) {
-        this.id = id;
+    // Just store flight IDs as strings for now (simple)
+    @ElementCollection
+    private List<String> flights = new ArrayList<>();
+
+    public Airplane() {}
+
+    public Airplane(int number) {
         this.number = number;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getNumber() {

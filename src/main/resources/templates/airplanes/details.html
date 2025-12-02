@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Airplane Details</title>
+</head>
+<body>
+
+<h1>Airplane Details</h1>
+
+<p><strong>ID:</strong> <span th:text="${airplane.id}"></span></p>
+<p><strong>Number:</strong> <span th:text="${airplane.number}"></span></p>
+
+<p>
+    <strong>Flights:</strong><br/>
+    <span th:each="f : ${airplane.flights}" th:text="${f + ' '}"></span>
+</p>
+
+<a th:href="@{/airplanes}">Back to list</a>
+<a th:href="@{/airplanes/edit/{id}(id=${airplane.id})}">Edit</a>
+
+</body>
+</html>
