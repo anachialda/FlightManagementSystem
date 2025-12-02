@@ -29,33 +29,39 @@ public class TicketController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model) {
         Ticket ticket = service.findById(id);
-        if (ticket == null) {
-            return "redirect:/tickets";
-        }
+        if (ticket == null) return "redirect:/tickets";
         model.addAttribute("ticket", ticket);
         return "tickets/form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Ticket ticket) {
+    public String save(@ModelAttribute Ticket ticket,
+                       @RequestParam(required = false) String luggagesInput) {
+
+        if (luggagesInput != null && !luggagesInput.isBlank()) {
+            ticket.setLuggages(
+                    java.util.Arrays.stream(luggagesInput.split(","))
+                            .map(String::trim)
+                            .toList()
+            );
+        }
+
         service.save(ticket);
         return "redirect:/tickets";
     }
 
     @GetMapping("/details/{id}")
-    public String details(@PathVariable String id, Model model) {
+    public String details(@PathVariable Long id, Model model) {
         Ticket ticket = service.findById(id);
-        if (ticket == null) {
-            return "redirect:/tickets";
-        }
+        if (ticket == null) return "redirect:/tickets";
         model.addAttribute("ticket", ticket);
         return "tickets/details";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable String id) {
+    public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/tickets";
     }

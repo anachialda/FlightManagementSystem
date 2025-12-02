@@ -1,103 +1,68 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.Passenger;
-
 import com.example.flight.demo.service.PassengerService;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-
 @RequestMapping("/passengers")
-
 public class PassengerController {
 
     private final PassengerService service;
 
     public PassengerController(PassengerService service) {
-
         this.service = service;
-
     }
 
     @GetMapping
-
     public String list(Model model) {
-
         model.addAttribute("passengers", service.findAll());
-
         return "passengers/list";
-
     }
 
     @GetMapping("/new")
-
     public String showCreateForm(Model model) {
-
         model.addAttribute("passenger", new Passenger());
-
         return "passengers/form";
-
     }
 
     @GetMapping("/edit/{id}")
-
-    public String showEditForm(@PathVariable String id, Model model) {
-
+    public String showEditForm(@PathVariable Long id, Model model) {
         Passenger passenger = service.findById(id);
-
-        if (passenger == null) {
-
-            return "redirect:/passengers";
-
-        }
-
+        if (passenger == null) return "redirect:/passengers";
         model.addAttribute("passenger", passenger);
-
         return "passengers/form";
-
     }
 
     @PostMapping("/save")
+    public String save(@ModelAttribute Passenger passenger,
+                       @RequestParam(required = false) String ticketsInput) {
 
-    public String save(@ModelAttribute Passenger passenger) {
+        if (ticketsInput != null && !ticketsInput.isBlank()) {
+            passenger.setTickets(
+                    java.util.Arrays.stream(ticketsInput.split(","))
+                            .map(String::trim)
+                            .toList()
+            );
+        }
 
         service.save(passenger);
-
         return "redirect:/passengers";
-
     }
 
     @GetMapping("/details/{id}")
-
-    public String details(@PathVariable String id, Model model) {
-
+    public String details(@PathVariable Long id, Model model) {
         Passenger passenger = service.findById(id);
-
-        if (passenger == null) {
-
-            return "redirect:/passengers";
-
-        }
-
+        if (passenger == null) return "redirect:/passengers";
         model.addAttribute("passenger", passenger);
-
         return "passengers/details";
-
     }
 
     @PostMapping("/delete/{id}")
-
-    public String delete(@PathVariable String id) {
-
+    public String delete(@PathVariable Long id) {
         service.delete(id);
-
         return "redirect:/passengers";
-
     }
-
 }

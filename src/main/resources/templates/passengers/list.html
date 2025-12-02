@@ -1,24 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Passengers</title></head>
+<head><title>Passengers</title></head>
 <body>
-
 <h1>Passengers</h1>
-<p><a href="/passengers/new">Add Passenger</a></p>
-
-<table border="1" cellpadding="6">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Currency</th>
-        <th>Email</th>
-        <th>VIP</th>
-        <th>Tickets</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
+<a th:href="@{/passengers/new}">➕ Add Passenger</a>
+<table border="1">
+    <tr><th>ID</th><th>Name</th><th>Currency</th><th>Email</th><th>VIP</th><th>Tickets</th><th>Actions</th></tr>
     <tr th:each="p : ${passengers}">
         <td th:text="${p.id}"></td>
         <td th:text="${p.name}"></td>
@@ -26,17 +13,14 @@
         <td th:text="${p.email}"></td>
         <td th:text="${p.vip}"></td>
         <td th:text="${#strings.listJoin(p.tickets, ', ')}"></td>
-
         <td>
-            <a th:href="@{'/passengers/edit/' + ${p.id}}">Edit</a>
-            <form th:action="@{'/passengers/delete/' + ${p.id}}"
-                  method="post" style="display:inline;">
+            <a th:href="@{/passengers/details/{id}(id=${p.id})}">Details</a>
+            <a th:href="@{/passengers/edit/{id}(id=${p.id})}">Edit</a>
+            <form th:action="@{/passengers/delete/{id}(id=${p.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
-    </tbody>
 </table>
-
 </body>
 </html>

@@ -29,33 +29,39 @@ public class NoticeBoardController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model) {
         NoticeBoard noticeBoard = service.findById(id);
-        if (noticeBoard == null) {
-            return "redirect:/notice-boards";
-        }
+        if (noticeBoard == null) return "redirect:/notice-boards";
         model.addAttribute("noticeBoard", noticeBoard);
         return "noticeBoards/form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute NoticeBoard noticeBoard) {
+    public String save(@ModelAttribute NoticeBoard noticeBoard,
+                       @RequestParam(required = false) String flightsInput) {
+
+        if (flightsInput != null && !flightsInput.isBlank()) {
+            noticeBoard.setFlightsOfTheDay(
+                    java.util.Arrays.stream(flightsInput.split(","))
+                            .map(String::trim)
+                            .toList()
+            );
+        }
+
         service.save(noticeBoard);
         return "redirect:/notice-boards";
     }
 
     @GetMapping("/details/{id}")
-    public String details(@PathVariable String id, Model model) {
+    public String details(@PathVariable Long id, Model model) {
         NoticeBoard noticeBoard = service.findById(id);
-        if (noticeBoard == null) {
-            return "redirect:/notice-boards";
-        }
+        if (noticeBoard == null) return "redirect:/notice-boards";
         model.addAttribute("noticeBoard", noticeBoard);
         return "noticeBoards/details";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable String id) {
+    public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/notice-boards";
     }

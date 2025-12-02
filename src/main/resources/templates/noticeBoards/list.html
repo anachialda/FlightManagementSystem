@@ -1,36 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Notice Boards</title></head>
+<head><title>Notice Boards</title></head>
 <body>
-
 <h1>Notice Boards</h1>
-<p><a href="/notice-boards/new">Add Notice Board</a></p>
-
-<table border="1" cellpadding="6">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Flights</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
+<a th:href="@{/notice-boards/new}">➕ Add Notice Board</a>
+<table border="1">
+    <tr><th>ID</th><th>Date</th><th>Flights</th><th>Actions</th></tr>
     <tr th:each="b : ${noticeBoards}">
         <td th:text="${b.id}"></td>
         <td th:text="${b.date}"></td>
         <td th:text="${#strings.listJoin(b.flightsOfTheDay, ', ')}"></td>
-
         <td>
-            <a th:href="@{'/notice-boards/edit/' + ${b.id}}">Edit</a>
-            <form th:action="@{'/notice-boards/delete/' + ${b.id}}"
-                  method="post" style="display:inline;">
+            <a th:href="@{/notice-boards/details/{id}(id=${b.id})}">Details</a>
+            <a th:href="@{/notice-boards/edit/{id}(id=${b.id})}">Edit</a>
+            <form th:action="@{/notice-boards/delete/{id}(id=${b.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
-    </tbody>
 </table>
-
 </body>
 </html>

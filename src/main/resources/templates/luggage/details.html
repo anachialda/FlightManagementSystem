@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Luggage Details</title></head>
+<body>
+<h1>Luggage Details</h1>
+<p><strong>ID:</strong> <span th:text="${luggage.id}"></span></p>
+<p><strong>Ticket ID:</strong> <span th:text="${luggage.ticketId}"></span></p>
+<p><strong>Status:</strong> <span th:text="${luggage.status}"></span></p>
+<a th:href="@{/luggage}">Back to list</a>
+<a th:href="@{/luggage/edit/{id}(id=${luggage.id})}">Edit</a>
+</body>
+</html>

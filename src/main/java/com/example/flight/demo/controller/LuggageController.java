@@ -18,7 +18,7 @@ public class LuggageController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("luggage", service.findAll());
+        model.addAttribute("luggageList", service.findAll());
         return "luggage/list";
     }
 
@@ -29,11 +29,9 @@ public class LuggageController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+    public String showEditForm(@PathVariable Long id, Model model) {
         Luggage luggage = service.findById(id);
-        if (luggage == null) {
-            return "redirect:/luggage";
-        }
+        if (luggage == null) return "redirect:/luggage";
         model.addAttribute("luggage", luggage);
         return "luggage/form";
     }
@@ -45,17 +43,15 @@ public class LuggageController {
     }
 
     @GetMapping("/details/{id}")
-    public String details(@PathVariable String id, Model model) {
+    public String details(@PathVariable Long id, Model model) {
         Luggage luggage = service.findById(id);
-        if (luggage == null) {
-            return "redirect:/luggage";
-        }
+        if (luggage == null) return "redirect:/luggage";
         model.addAttribute("luggage", luggage);
         return "luggage/details";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable String id) {
+    public String delete(@PathVariable Long id) {
         service.delete(id);
         return "redirect:/luggage";
     }

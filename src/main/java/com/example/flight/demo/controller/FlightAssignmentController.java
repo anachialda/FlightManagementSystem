@@ -31,9 +31,7 @@ public class FlightAssignmentController {
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Model model) {
         FlightAssignment assignment = service.findById(id);
-        if (assignment == null) {
-            return "redirect:/assignments";
-        }
+        if (assignment == null) return "redirect:/assignments";
         model.addAttribute("assignment", assignment);
         return "assignments/form";
     }
@@ -47,9 +45,7 @@ public class FlightAssignmentController {
     @GetMapping("/details/{id}")
     public String details(@PathVariable String id, Model model) {
         FlightAssignment assignment = service.findById(id);
-        if (assignment == null) {
-            return "redirect:/assignments";
-        }
+        if (assignment == null) return "redirect:/assignments";
         model.addAttribute("assignment", assignment);
         return "assignments/details";
     }

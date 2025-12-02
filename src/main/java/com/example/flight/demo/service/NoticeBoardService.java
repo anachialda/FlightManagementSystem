@@ -19,15 +19,15 @@ public class NoticeBoardService {
         return repository.findAll();
     }
 
-    public NoticeBoard findById(String id) {
-        return repository.findById(id);
+    public NoticeBoard findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public void save(NoticeBoard noticeBoard) {
         repository.save(noticeBoard);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

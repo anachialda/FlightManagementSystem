@@ -19,15 +19,15 @@ public class LuggageService {
         return repository.findAll();
     }
 
-    public Luggage findById(String id) {
-        return repository.findById(id);
+    public Luggage findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public void save(Luggage luggage) {
         repository.save(luggage);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

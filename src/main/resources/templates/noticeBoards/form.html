@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Notice Board</title></head>
+<head><title>Notice Board Form</title></head>
 <body>
-
-<h1 th:text="${noticeBoard.id == null ? 'New Notice Board' : 'Edit Notice Board'}"></h1>
-
+<h1 th:text="${noticeBoard.id == null} ? 'Add Notice Board' : 'Edit Notice Board'"></h1>
 <form th:action="@{/notice-boards/save}" th:object="${noticeBoard}" method="post">
-
-    <input type="hidden" th:field="*{id}" />
-
-    <p><label>Date:</label>
-        <input type="date" th:field="*{date}" required /></p>
-
-    <p><button type="submit">Save</button>
-        <a href="/notice-boards">Cancel</a></p>
+    <input type="hidden" th:field="*{id}"/>
+    <label>Date:</label>
+    <input type="date" th:field="*{date}" required/><br/><br/>
+    <label>Flights of the Day (comma separated):</label>
+    <input type="text"
+           th:value="${noticeBoard.flightsOfTheDay != null ? #strings.listJoin(noticeBoard.flightsOfTheDay, ', ') : ''}"
+           name="flightsInput"/>
+    <br/><br/>
+    <button type="submit">Save</button>
 </form>
-
+<a th:href="@{/notice-boards}">Back to list</a>
 </body>
 </html>

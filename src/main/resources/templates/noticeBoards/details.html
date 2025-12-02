@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Notice Board Details</title></head>
+<body>
+<h1>Notice Board Details</h1>
+<p><strong>ID:</strong> <span th:text="${noticeBoard.id}"></span></p>
+<p><strong>Date:</strong> <span th:text="${noticeBoard.date}"></span></p>
+<p><strong>Flights of the Day:</strong><br/>
+    <span th:each="f : ${noticeBoard.flightsOfTheDay}" th:text="${f + ' '}"></span>
+</p>
+<a th:href="@{/notice-boards}">Back to list</a>
+<a th:href="@{/notice-boards/edit/{id}(id=${noticeBoard.id})}">Edit</a>
+</body>
+</html>

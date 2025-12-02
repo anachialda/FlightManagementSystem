@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Luggage</title></head>
+<head><title>Luggage Form</title></head>
 <body>
-
-<h1 th:text="${luggage.id == null ? 'New Luggage' : 'Edit Luggage'}"></h1>
-
+<h1 th:text="${luggage.id == null} ? 'Add Luggage' : 'Edit Luggage'"></h1>
 <form th:action="@{/luggage/save}" th:object="${luggage}" method="post">
-
-    <input type="hidden" th:field="*{id}" />
-
-    <p><label>Ticket ID:</label>
-        <input type="text" th:field="*{ticketId}" required /></p>
-
-    <p><label>Status:</label>
-        <input type="text" th:field="*{status}" required /></p>
-
-    <p><button type="submit">Save</button>
-        <a href="/luggage">Cancel</a></p>
+    <input type="hidden" th:field="*{id}"/>
+    <label>Ticket ID:</label>
+    <input type="text" th:field="*{ticketId}" required/><br/><br/>
+    <label>Status:</label>
+    <select th:field="*{status}">
+        <option th:value="CHECKED_IN">CHECKED_IN</option>
+        <option th:value="LOADED">LOADED</option>
+        <option th:value="DELIVERED">DELIVERED</option>
+    </select><br/><br/>
+    <button type="submit">Save</button>
 </form>
-
+<a th:href="@{/luggage}">Back to list</a>
 </body>
 </html>

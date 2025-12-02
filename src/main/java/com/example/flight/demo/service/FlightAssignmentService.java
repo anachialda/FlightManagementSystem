@@ -20,7 +20,7 @@ public class FlightAssignmentService {
     }
 
     public FlightAssignment findById(String id) {
-        return repository.findById(id);
+        return repository.findById(id).orElse(null);
     }
 
     public void save(FlightAssignment assignment) {

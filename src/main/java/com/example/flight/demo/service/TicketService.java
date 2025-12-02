@@ -19,15 +19,15 @@ public class TicketService {
         return repository.findAll();
     }
 
-    public Ticket findById(String id) {
-        return repository.findById(id);
+    public Ticket findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public void save(Ticket ticket) {
         repository.save(ticket);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

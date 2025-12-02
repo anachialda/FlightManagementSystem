@@ -1,5 +1,8 @@
 package com.example.flight.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Luggage {
 
     public enum Status {
@@ -8,40 +11,27 @@ public class Luggage {
         DELIVERED
     }
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String ticketId;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Luggage() {
-    }
+    public Luggage() {}
 
-    public Luggage(String id, String ticketId, Status status) {
-        this.id = id;
+    public Luggage(String ticketId, Status status) {
         this.ticketId = ticketId;
         this.status = status;
     }
 
-    public String getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getTicketId() { return ticketId; }
+    public void setTicketId(String ticketId) { this.ticketId = ticketId; }
 
-    public String getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 }

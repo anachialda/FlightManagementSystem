@@ -1,44 +1,33 @@
 package com.example.flight.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class NoticeBoard {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private LocalDate date;
-    private List<String> flightsOfTheDay = new ArrayList<>(); // Flight IDs
 
-    public NoticeBoard() {
-    }
+    @ElementCollection
+    private List<String> flightsOfTheDay = new ArrayList<>();
 
-    public NoticeBoard(String id, LocalDate date) {
-        this.id = id;
+    public NoticeBoard() {}
+
+    public NoticeBoard(LocalDate date) {
         this.date = date;
     }
 
-    public String getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public List<String> getFlightsOfTheDay() {
-        return flightsOfTheDay;
-    }
-
-    public void setFlightsOfTheDay(List<String> flightsOfTheDay) {
-        this.flightsOfTheDay = flightsOfTheDay;
-    }
+    public List<String> getFlightsOfTheDay() { return flightsOfTheDay; }
+    public void setFlightsOfTheDay(List<String> flightsOfTheDay) { this.flightsOfTheDay = flightsOfTheDay; }
 }

@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Flight Assignment</title>
-</head>
+<head><title>Flight Assignment Form</title></head>
 <body>
-
-<h1 th:text="${assignment.id == null ? 'New Assignment' : 'Edit Assignment'}"></h1>
-
+<h1 th:text="${assignment.id == null} ? 'Add Assignment' : 'Edit Assignment'"></h1>
 <form th:action="@{/assignments/save}" th:object="${assignment}" method="post">
-
-    <!-- Hidden ID so edit works -->
-    <input type="hidden" th:field="*{id}" />
-
-    <p>
-        <label>Flight ID:</label>
-        <input type="text" th:field="*{flightId}" required />
-    </p>
-
-    <p>
-        <label>Staff ID:</label>
-        <input type="text" th:field="*{staffId}" required />
-    </p>
-
-    <p>
-        <button type="submit">Save</button>
-        <a href="/assignments">Cancel</a>
-    </p>
+    <input type="hidden" th:field="*{id}"/>
+    <label>Flight ID:</label>
+    <input type="text" th:field="*{flightId}" required/><br/><br/>
+    <label>Staff ID:</label>
+    <input type="text" th:field="*{staffId}" required/><br/><br/>
+    <button type="submit">Save</button>
 </form>
+<a th:href="@{/assignments}">Back to list</a>
 </body>
 </html>

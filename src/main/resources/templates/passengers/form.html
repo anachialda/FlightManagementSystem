@@ -1,30 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Passenger</title></head>
+<head><title>Passenger Form</title></head>
 <body>
-
-<h1 th:text="${passenger.id == null ? 'New Passenger' : 'Edit Passenger'}"></h1>
-
+<h1 th:text="${passenger.id == null} ? 'Add Passenger' : 'Edit Passenger'"></h1>
 <form th:action="@{/passengers/save}" th:object="${passenger}" method="post">
-
-    <input type="hidden" th:field="*{id}" />
-
-    <p><label>Name:</label>
-        <input type="text" th:field="*{name}" required /></p>
-
-    <p><label>Currency:</label>
-        <input type="text" th:field="*{currency}" /></p>
-
-    <p><label>Email:</label>
-        <input type="email" th:field="*{email}" /></p>
-
-    <p><label>VIP:</label>
-        <input type="checkbox" th:field="*{vip}" /></p>
-
-    <p><button type="submit">Save</button>
-        <a href="/passengers">Cancel</a></p>
-
+    <input type="hidden" th:field="*{id}"/>
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required/><br/><br/>
+    <label>Currency:</label>
+    <input type="text" th:field="*{currency}"/><br/><br/>
+    <label>Email:</label>
+    <input type="email" th:field="*{email}"/><br/><br/>
+    <label>VIP:</label>
+    <input type="checkbox" th:field="*{vip}"/><br/><br/>
+    <label>Tickets (comma separated):</label>
+    <input type="text"
+           th:value="${passenger.tickets != null ? #strings.listJoin(passenger.tickets, ', ') : ''}"
+           name="ticketsInput"/>
+    <br/><br/>
+    <button type="submit">Save</button>
 </form>
-
+<a th:href="@{/passengers}">Back to list</a>
 </body>
 </html>

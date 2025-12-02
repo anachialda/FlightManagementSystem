@@ -19,15 +19,15 @@ public class PassengerService {
         return repository.findAll();
     }
 
-    public Passenger findById(String id) {
-        return repository.findById(id);
+    public Passenger findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public void save(Passenger passenger) {
         repository.save(passenger);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

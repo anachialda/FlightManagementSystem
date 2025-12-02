@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Ticket Details</title></head>
+<body>
+<h1>Ticket Details</h1>
+<p><strong>ID:</strong> <span th:text="${ticket.id}"></span></p>
+<p><strong>Passenger ID:</strong> <span th:text="${ticket.passengerId}"></span></p>
+<p><strong>Flight ID:</strong> <span th:text="${ticket.flightId}"></span></p>
+<p><strong>Price:</strong> <span th:text="${ticket.price}"></span></p>
+<p><strong>Seat Number:</strong> <span th:text="${ticket.seatNumber}"></span></p>
+<p><strong>Luggages:</strong><br/>
+    <span th:each="l : ${ticket.luggages}" th:text="${l + ' '}"></span>
+</p>
+<a th:href="@{/tickets}">Back to list</a>
+<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}">Edit</a>
+</body>
+</html>

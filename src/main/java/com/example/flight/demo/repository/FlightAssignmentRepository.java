@@ -1,12 +1,7 @@
 package com.example.flight.demo.repository;
 
 import com.example.flight.demo.model.FlightAssignment;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class FlightAssignmentRepository extends InFileRepository<FlightAssignment> {
-
-    public FlightAssignmentRepository() {
-        super("flight_assignments.json", FlightAssignment.class);
-    }
+public interface FlightAssignmentRepository extends JpaRepository<FlightAssignment, String> {
 }
