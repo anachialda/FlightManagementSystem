@@ -1,9 +1,11 @@
 package com.example.flight.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Flight {
 
     public enum Status {
@@ -13,30 +15,29 @@ public class Flight {
         IN_PROGRESS
     }
 
-    private String id;
-    private String name;        // e.g., "RO123"
-    private String noticeBoardId; // link
-    private String airplaneId;    // link
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;               // e.g. RO123
+    private String noticeBoardId;
+    private Long airplaneId;           // FK later if needed
+
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
+
+    @ElementCollection
     private List<String> tickets = new ArrayList<>();
+
+    @ElementCollection
     private List<String> flightAssignments = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
     private Status status = Status.SCHEDULED;
 
     public Flight() {}
 
-    public Flight(String id, String name, String noticeBoardId, String airplaneId,
-                  LocalDateTime departureTime, LocalDateTime arrivalTime) {
-        this.id = id;
-        this.name = name;
-        this.noticeBoardId = noticeBoardId;
-        this.airplaneId = airplaneId;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-    }
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public Long getId() { return id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -44,8 +45,8 @@ public class Flight {
     public String getNoticeBoardId() { return noticeBoardId; }
     public void setNoticeBoardId(String noticeBoardId) { this.noticeBoardId = noticeBoardId; }
 
-    public String getAirplaneId() { return airplaneId; }
-    public void setAirplaneId(String airplaneId) { this.airplaneId = airplaneId; }
+    public Long getAirplaneId() { return airplaneId; }
+    public void setAirplaneId(Long airplaneId) { this.airplaneId = airplaneId; }
 
     public LocalDateTime getDepartureTime() { return departureTime; }
     public void setDepartureTime(LocalDateTime departureTime) { this.departureTime = departureTime; }
