@@ -11,10 +11,10 @@ public class FlightAssignment {
     private String id;
 
     private String flightId;
-    private String staffId; // AirlineEmployee sau AirportEmployee ID
+    private String staffId;
 
     public FlightAssignment() {
-        this.id = UUID.randomUUID().toString(); // generează automat un ID unic
+        this.id = UUID.randomUUID().toString();
     }
 
     public FlightAssignment(String flightId, String staffId) {
@@ -24,11 +24,8 @@ public class FlightAssignment {
     }
 
     public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
     public String getFlightId() { return flightId; }
     public void setFlightId(String flightId) { this.flightId = flightId; }
-
     public String getStaffId() { return staffId; }
     public void setStaffId(String staffId) { this.staffId = staffId; }
 }

@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/assignments")
 public class FlightAssignmentController {
-
     private final FlightAssignmentService service;
-
-    public FlightAssignmentController(FlightAssignmentService service) {
-        this.service = service;
-    }
+    public FlightAssignmentController(FlightAssignmentService service) { this.service = service; }
 
     @GetMapping
     public String list(Model model) {

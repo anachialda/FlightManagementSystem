@@ -6,14 +6,14 @@
 <a th:href="@{/assignments/new}">➕ Add Assignment</a>
 <table border="1">
     <tr><th>ID</th><th>Flight ID</th><th>Staff ID</th><th>Actions</th></tr>
-    <tr th:each="assignment : ${assignments}">
-        <td th:text="${assignment.id}"></td>
-        <td th:text="${assignment.flightId}"></td>
-        <td th:text="${assignment.staffId}"></td>
+    <tr th:each="a : ${assignments}">
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.flightId}"></td>
+        <td th:text="${a.staffId}"></td>
         <td>
-            <a th:href="@{/assignments/details/{id}(id=${assignment.id})}">Details</a>
-            <a th:href="@{/assignments/edit/{id}(id=${assignment.id})}">Edit</a>
-            <form th:action="@{/assignments/delete/{id}(id=${assignment.id})}" method="post" style="display:inline;">
+            <a th:href="@{/assignments/details/{id}(id=${a.id})}">Details</a>
+            <a th:href="@{/assignments/edit/{id}(id=${a.id})}">Edit</a>
+            <form th:action="@{/assignments/delete/{id}(id=${a.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
