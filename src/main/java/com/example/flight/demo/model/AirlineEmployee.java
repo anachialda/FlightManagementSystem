@@ -3,7 +3,6 @@ package com.example.flight.demo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -11,46 +10,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("AIRLINE")
-public class AirlineEmployee extends Staff {
+@Table(name = "airline_employees")
+public class AirlineEmployee {
 
-    public enum Role {
-        PILOT,
-        COPILOT,
-        FLIGHT_ATTENDANT,
-        ENGINEER,
-        MECHANIC,
-        GROUND_STAFF
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @NotNull(message = "Rolle darf nicht leer sein")
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private String name;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @NotNull
+    private AirlineRole role;
 
-    @NotBlank(message = "Lizenznummer darf nicht leer sein")
-    @Size(min = 3, max = 50, message = "Lizenznummer muss zwischen 3 und 50 Zeichen lang sein")
+    @NotBlank
     private String licenseNumber;
 
-    @PastOrPresent(message = "Arbeitsbeginn darf nicht in der Zukunft liegen")
+    @NotNull
     private LocalDate workStart;
 
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlightAssignment> assignments = new ArrayList<>();
 
-    public AirlineEmployee() {
+    public Long getId() {
+        return id;
     }
 
-    public AirlineEmployee(String name, Role role, String licenseNumber) {
-        super(name);
-        this.role = role;
-        this.licenseNumber = licenseNumber;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Role getRole() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public AirlineRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(AirlineRole role) {
         this.role = role;
     }
 

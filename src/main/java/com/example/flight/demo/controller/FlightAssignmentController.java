@@ -1,106 +1,91 @@
 package com.example.flight.demo.controller;
 
-import com.example.flight.demo.model.Flight;
 import com.example.flight.demo.model.FlightAssignment;
-import com.example.flight.demo.model.Staff;
-import com.example.flight.demo.service.BusinessException;
-import com.example.flight.demo.service.FlightAssignmentService;
-import com.example.flight.demo.service.FlightService;
-import com.example.flight.demo.service.StaffService;
+import com.example.flight.demo.repository.AirlineEmployeeRepository;
+import com.example.flight.demo.repository.FlightAssignmentRepository;
+import com.example.flight.demo.repository.FlightRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/flight-assignments")
+@RequestMapping("/assignments")
 public class FlightAssignmentController {
 
-    private final FlightAssignmentService flightAssignmentService;
-    private final FlightService flightService;
-    private final StaffService staffService;
+    private final FlightAssignmentRepository assignmentRepository;
+    private final FlightRepository flightRepository;
+    private final AirlineEmployeeRepository employeeRepository;
 
-    public FlightAssignmentController(FlightAssignmentService flightAssignmentService,
-                                      FlightService flightService,
-                                      StaffService staffService) {
-        this.flightAssignmentService = flightAssignmentService;
-        this.flightService = flightService;
-        this.staffService = staffService;
+    public FlightAssignmentController(FlightAssignmentRepository assignmentRepository,
+                                      FlightRepository flightRepository,
+                                      AirlineEmployeeRepository employeeRepository) {
+        this.assignmentRepository = assignmentRepository;
+        this.flightRepository = flightRepository;
+        this.employeeRepository = employeeRepository;
+    }
+
+    @ModelAttribute("flights")
+    public Iterable<Flight> flights() {
+        return flightRepository.findAll();
+    }
+
+    @ModelAttribute("employees")
+    public Iterable<AirlineEmployee> employees() {
+        return employeeRepository.findAll();
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("assignments", flightAssignmentService.findAll());
-        return "flightAssignments/list";
+        model.addAttribute("assignments", assignmentRepository.findAll());
+        return "assignments/list";
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
-        FlightAssignment assignment = new FlightAssignment();
-        prepareFormModel(model, assignment);
-        return "flightAssignments/form";
+    public String createForm(Model model) {
+        model.addAttribute("assignment", new FlightAssignment());
+        return "assignments/form";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        FlightAssignment assignment = flightAssignmentService.findById(id);
-        if (assignment == null) {
-            return "redirect:/flight-assignments";
+    public String editForm(@PathVariable Long id, Model model) {
+        FlightAssignment assignment = assignmentRepository.findById(id).orElseThrow();
+        if (assignment.getFlight() != null) {
+            assignment.setFlightId(assignment.getFlight().getId());
         }
-        prepareFormModel(model, assignment);
-        return "flightAssignments/form";
+        if (assignment.getStaff() != null) {
+            assignment.setStaffId(assignment.getStaff().getId());
+        }
+        model.addAttribute("assignment", assignment);
+        return "assignments/form";
     }
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("assignment") FlightAssignment assignment,
-                       BindingResult bindingResult,
-                       Model model) {
-
-        if (bindingResult.hasErrors()) {
-            prepareFormModel(model, assignment);
-            return "flightAssignments/form";
+                       BindingResult result) {
+        if (result.hasErrors()) {
+            return "assignments/form";
         }
-
-        try {
-            flightAssignmentService.save(assignment);
-            return "redirect:/flight-assignments";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            prepareFormModel(model, assignment);
-            return "flightAssignments/form";
+        if (assignment.getFlightId() != null) {
+            flightRepository.findById(assignment.getFlightId()).ifPresent(assignment::setFlight);
         }
+        if (assignment.getStaffId() != null) {
+            employeeRepository.findById(assignment.getStaffId()).ifPresent(assignment::setStaff);
+        }
+        assignmentRepository.save(assignment);
+        return "redirect:/assignments";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        assignmentRepository.deleteById(id);
+        return "redirect:/assignments";
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        FlightAssignment assignment = flightAssignmentService.findById(id);
-        if (assignment == null) {
-            return "redirect:/flight-assignments";
-        }
-        model.addAttribute("assignment", assignment);
-        return "flightAssignments/details";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            flightAssignmentService.delete(id);
-            return "redirect:/flight-assignments";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("assignments", flightAssignmentService.findAll());
-            return "flightAssignments/list";
-        }
-    }
-
-    private void prepareFormModel(Model model, FlightAssignment assignment) {
-        List<Flight> flights = flightService.findAll();
-        List<Staff> staffList = staffService.findAll();
-        model.addAttribute("assignment", assignment);
-        model.addAttribute("flights", flights);
-        model.addAttribute("staffList", staffList);
+        model.addAttribute("assignment", assignmentRepository.findById(id).orElseThrow());
+        return "assignments/details";
     }
 }
