@@ -9,17 +9,28 @@
 
 <p><strong>ID:</strong> <span th:text="${employee.id}"></span></p>
 <p><strong>Name:</strong> <span th:text="${employee.name}"></span></p>
-<p><strong>Role:</strong> <span th:text="${employee.role}"></span></p>
-<p><strong>License Number:</strong> <span th:text="${employee.licenseNumber}"></span></p>
-<p><strong>Work Start:</strong> <span th:text="${employee.workStart}"></span></p>
+<p><strong>Rolle:</strong> <span th:text="${employee.role}"></span></p>
+<p><strong>Lizenznummer:</strong> <span th:text="${employee.licenseNumber}"></span></p>
+<p><strong>Arbeitsbeginn:</strong> <span th:text="${employee.workStart}"></span></p>
 
-<p>
-    <strong>Assignments:</strong><br/>
-    <span th:each="a : ${employee.assignments}" th:text="${a} + ' '" />
-</p>
+<hr>
 
-<a th:href="@{/airline-employees}">Back to list</a>
-<a th:href="@{/airline-employees/edit/{id}(id=${employee.id})}">Edit</a>
+<h3>Flugzuweisungen:</h3>
+<ul>
+    <li th:each="fa : ${employee.assignments}">
+        Flug:
+        <span th:text="${fa.flight.name}"></span>
+        (ID: <span th:text="${fa.flight.id}"></span>)
+    </li>
+    <li th:if="${employee.assignments.size() == 0}">
+        Keine Flugzuweisungen vorhanden.
+    </li>
+</ul>
+
+<hr>
+
+<a th:href="@{/airline-employees}">Zurück</a>
+<a th:href="@{'/airline-employees/edit/' + ${employee.id}}">Bearbeiten</a>
 
 </body>
 </html>

@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Airplane Form</title>
+    <title th:text="${airplane.id == null ? 'Neues Flugzeug' : 'Flugzeug bearbeiten'}"></title>
 </head>
 <body>
 
-<h1 th:text="${airplane.id == null} ? 'Add Airplane' : 'Edit Airplane'"></h1>
+<h1 th:text="${airplane.id == null ? 'Neues Flugzeug' : 'Flugzeug bearbeiten'}"></h1>
 
 <form th:action="@{/airplanes/save}" th:object="${airplane}" method="post">
 
+    <!-- Hidden ID (doar pentru editare) -->
     <input type="hidden" th:field="*{id}"/>
 
-    <label>Plane Number:</label>
-    <input type="number" th:field="*{number}" required/><br/><br/>
+    <!-- NUMBER -->
+    <label>Flugzeugnummer:</label><br>
+    <input type="number" th:field="*{number}" />
+    <br>
 
-    <label>Flight IDs (comma separated):</label>
-    <input type="text"
-           th:value="${airplane.flights != null ? #strings.arrayJoin(airplane.flights, ', ') : ''}"
-           name="flightsInput"/>
-    <br/><br/>
+    <!-- Error message -->
+    <div th:if="${#fields.hasErrors('number')}"
+         th:errors="*{number}"
+         style="color:red"></div>
 
-    <button type="submit">Save</button>
+    <br>
+
+    <button type="submit">Speichern</button>
+    <a th:href="@{/airplanes}">Zurück</a>
+
 </form>
-
-<a th:href="@{/airplanes}">Back to list</a>
 
 </body>
 </html>

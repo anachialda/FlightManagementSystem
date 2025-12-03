@@ -3,12 +3,11 @@ package com.example.flight.demo.controller;
 import com.example.flight.demo.model.AirlineEmployee;
 import com.example.flight.demo.model.AirlineEmployee.Role;
 import com.example.flight.demo.service.AirlineEmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/airline-employees")
@@ -45,14 +44,13 @@ public class AirlineEmployeeController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute AirlineEmployee employee,
-                       @RequestParam(required = false) String assignmentsInput) {
+    public String save(@Valid @ModelAttribute("employee") AirlineEmployee employee,
+                       BindingResult bindingResult,
+                       Model model) {
 
-        if (assignmentsInput != null && !assignmentsInput.isBlank()) {
-            List<String> assignments = Arrays.stream(assignmentsInput.split(","))
-                    .map(String::trim)
-                    .toList();
-            employee.setAssignments(assignments);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", Role.values());
+            return "airlineEmployees/form";
         }
 
         service.save(employee);

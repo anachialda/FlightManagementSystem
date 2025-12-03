@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Airline Employee Form</title>
+    <title th:text="${employee.id == null ? 'Neuer Airline-Mitarbeiter' : 'Airline-Mitarbeiter bearbeiten'}"></title>
 </head>
 <body>
 
-<h1 th:text="${employee.id == null} ? 'Add Airline Employee' : 'Edit Airline Employee'"></h1>
+<h1 th:text="${employee.id == null ? 'Neuer Airline-Mitarbeiter' : 'Airline-Mitarbeiter bearbeiten'}"></h1>
 
 <form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
 
-    <!-- Hidden ID for editing -->
     <input type="hidden" th:field="*{id}"/>
 
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" required/><br/><br/>
+    <!-- Name -->
+    <label>Name:</label><br>
+    <input type="text" th:field="*{name}"/><br>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></div>
+    <br>
 
-    <label>Role:</label>
+    <!-- Role -->
+    <label>Rolle:</label><br>
     <select th:field="*{role}">
+        <option value="">-- bitte wählen --</option>
         <option th:each="r : ${roles}"
                 th:value="${r}"
                 th:text="${r}">
         </option>
-    </select>
-    <br/><br/>
+    </select><br>
+    <div th:if="${#fields.hasErrors('role')}" th:errors="*{role}" style="color:red"></div>
+    <br>
 
-    <label>License Number:</label>
-    <input type="text" th:field="*{licenseNumber}"/><br/><br/>
+    <!-- License -->
+    <label>Lizenznummer:</label><br>
+    <input type="text" th:field="*{licenseNumber}"/><br>
+    <div th:if="${#fields.hasErrors('licenseNumber')}" th:errors="*{licenseNumber}" style="color:red"></div>
+    <br>
 
-    <label>Work Start Date:</label>
-    <input type="date" th:field="*{workStart}"/><br/><br/>
+    <!-- Work start -->
+    <label>Arbeitsbeginn:</label><br>
+    <input type="date" th:field="*{workStart}"/><br>
+    <div th:if="${#fields.hasErrors('workStart')}" th:errors="*{workStart}" style="color:red"></div>
+    <br>
 
-    <label>Assignments (comma separated):</label>
-    <input type="text"
-           th:value="${employee.assignments != null ? #strings.arrayJoin(employee.assignments, ', ') : ''}"
-           name="assignmentsInput"/>
-    <br/><br/>
-
-    <button type="submit">Save</button>
+    <button type="submit">Speichern</button>
+    <a th:href="@{/airline-employees}">Zurück</a>
 </form>
-
-<a th:href="@{/airline-employees}">Back to list</a>
 
 </body>
 </html>

@@ -1,6 +1,9 @@
 package com.example.flight.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +14,18 @@ public class Airplane {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int number;
+    @NotNull(message = "Flugzeugnummer darf nicht leer sein")
+    @Positive(message = "Flugzeugnummer muss positiv sein")
+    @Column(nullable = false, unique = true)
+    private Integer number;
 
-    // Just store flight IDs as strings for now (simple)
-    @ElementCollection
-    private List<String> flights = new ArrayList<>();
+    @OneToMany(mappedBy = "airplane", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Flight> flights = new ArrayList<>();
 
-    public Airplane() {}
+    public Airplane() {
+    }
 
-    public Airplane(int number) {
+    public Airplane(Integer number) {
         this.number = number;
     }
 
@@ -27,19 +33,19 @@ public class Airplane {
         return id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public List<String> getFlights() {
+    public List<Flight> getFlights() {
         return flights;
     }
 
-    public void setFlights(List<String> flights) {
+    public void setFlights(List<Flight> flights) {
         this.flights = flights;
     }
 }

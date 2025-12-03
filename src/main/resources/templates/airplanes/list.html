@@ -2,32 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Airplanes</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <h1>Airplanes</h1>
 
-<a th:href="@{/airplanes/new}">➕ Add Airplane</a>
+<a th:href="@{/airplanes/new}">➕ Neues Flugzeug</a>
 
-<table border="1">
+<table border="1" cellpadding="8">
+    <thead>
     <tr>
         <th>ID</th>
-        <th>Number</th>
-        <th>Actions</th>
+        <th>Nummer</th>
+        <th>Aktionen</th>
     </tr>
+    </thead>
 
+    <tbody>
     <tr th:each="plane : ${airplanes}">
         <td th:text="${plane.id}"></td>
         <td th:text="${plane.number}"></td>
+
         <td>
-            <a th:href="@{/airplanes/details/{id}(id=${plane.id})}">Details</a>
-            <a th:href="@{/airplanes/edit/{id}(id=${plane.id})}">Edit</a>
-            <form th:action="@{/airplanes/delete/{id}(id=${plane.id})}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
+            <a th:href="@{'/airplanes/details/' + ${plane.id}}">Details</a> |
+            <a th:href="@{'/airplanes/edit/' + ${plane.id}}">Bearbeiten</a> |
+
+            <form th:action="@{'/airplanes/delete/' + ${plane.id}}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Löschen?')">Löschen</button>
             </form>
         </td>
     </tr>
-
+    </tbody>
 </table>
 
 </body>
