@@ -3,6 +3,7 @@ package com.example.flight.demo.controller;
 import com.example.flight.demo.model.AirlineEmployee;
 import com.example.flight.demo.model.AirlineEmployee.Role;
 import com.example.flight.demo.service.AirlineEmployeeService;
+import com.example.flight.demo.service.BusinessException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/airline-employees")
 public class AirlineEmployeeController {
 
-    private final AirlineEmployeeService service;
+    private final AirlineEmployeeService airlineEmployeeService;
 
-    public AirlineEmployeeController(AirlineEmployeeService service) {
-        this.service = service;
+    public AirlineEmployeeController(AirlineEmployeeService airlineEmployeeService) {
+        this.airlineEmployeeService = airlineEmployeeService;
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("employees", service.findAll());
+        model.addAttribute("employees", airlineEmployeeService.findAll());
         return "airlineEmployees/list";
     }
 
@@ -34,7 +35,7 @@ public class AirlineEmployeeController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        AirlineEmployee employee = service.findById(id);
+        AirlineEmployee employee = airlineEmployeeService.findById(id);
         if (employee == null) {
             return "redirect:/airline-employees";
         }
@@ -53,13 +54,19 @@ public class AirlineEmployeeController {
             return "airlineEmployees/form";
         }
 
-        service.save(employee);
-        return "redirect:/airline-employees";
+        try {
+            airlineEmployeeService.save(employee);
+            return "redirect:/airline-employees";
+        } catch (BusinessException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            model.addAttribute("roles", Role.values());
+            return "airlineEmployees/form";
+        }
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        AirlineEmployee employee = service.findById(id);
+        AirlineEmployee employee = airlineEmployeeService.findById(id);
         if (employee == null) {
             return "redirect:/airline-employees";
         }
@@ -68,8 +75,14 @@ public class AirlineEmployeeController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "redirect:/airline-employees";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            airlineEmployeeService.delete(id);
+            return "redirect:/airline-employees";
+        } catch (BusinessException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            model.addAttribute("employees", airlineEmployeeService.findAll());
+            return "airlineEmployees/list";
+        }
     }
 }
