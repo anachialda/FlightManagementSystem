@@ -1,7 +1,5 @@
 package com.example.flight.demo.controller;
 
-import com.example.flight.demo.model.AirlineEmployee;
-import com.example.flight.demo.model.Flight;
 import com.example.flight.demo.model.FlightAssignment;
 import com.example.flight.demo.repository.AirlineEmployeeRepository;
 import com.example.flight.demo.repository.FlightAssignmentRepository;
