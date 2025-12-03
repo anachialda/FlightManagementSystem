@@ -1,6 +1,10 @@
 package com.example.flight.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,37 +15,78 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String passengerId;
-    private String flightId;
+    @Positive(message = "Preis muss positiv sein")
+    @Column(nullable = false)
     private double price;
+
+    @NotBlank(message = "Sitznummer darf nicht leer sein")
+    @Column(nullable = false, length = 10)
     private String seatNumber;
 
-    @ElementCollection
-    private List<String> luggages = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "passenger_id", nullable = false)
+    @NotNull(message = "Passagier darf nicht leer sein")
+    private Passenger passenger;
 
-    public Ticket() {}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "flight_id", nullable = false)
+    @NotNull(message = "Flug darf nicht leer sein")
+    private Flight flight;
 
-    public Ticket(String passengerId, String flightId, double price, String seatNumber) {
-        this.passengerId = passengerId;
-        this.flightId = flightId;
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Luggage> luggages = new ArrayList<>();
+
+    public Ticket() {
+    }
+
+    public Ticket(Passenger passenger, Flight flight, double price, String seatNumber) {
+        this.passenger = passenger;
+        this.flight = flight;
         this.price = price;
         this.seatNumber = seatNumber;
     }
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getPassengerId() { return passengerId; }
-    public void setPassengerId(String passengerId) { this.passengerId = passengerId; }
+    public double getPrice() {
+        return price;
+    }
 
-    public String getFlightId() { return flightId; }
-    public void setFlightId(String flightId) { this.flightId = flightId; }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public String getSeatNumber() {
+        return seatNumber;
+    }
 
-    public String getSeatNumber() { return seatNumber; }
-    public void setSeatNumber(String seatNumber) { this.seatNumber = seatNumber; }
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
+    }
 
-    public List<String> getLuggages() { return luggages; }
-    public void setLuggages(List<String> luggages) { this.luggages = luggages; }
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
+    public List<Luggage> getLuggages() {
+        return luggages;
+    }
+
+    public void setLuggages(List<Luggage> luggages) {
+        this.luggages = luggages;
+    }
 }

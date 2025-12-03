@@ -1,31 +1,50 @@
 package com.example.flight.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import java.util.UUID;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class FlightAssignment {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String flightId;
-    private String staffId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "flight_id", nullable = false)
+    @NotNull(message = "Flug darf nicht leer sein")
+    private Flight flight;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "staff_id", nullable = false)
+    @NotNull(message = "Mitarbeiter darf nicht leer sein")
+    private Staff staff;
 
     public FlightAssignment() {
-        this.id = UUID.randomUUID().toString();
     }
 
-    public FlightAssignment(String flightId, String staffId) {
-        this.id = UUID.randomUUID().toString();
-        this.flightId = flightId;
-        this.staffId = staffId;
+    public FlightAssignment(Flight flight, Staff staff) {
+        this.flight = flight;
+        this.staff = staff;
     }
 
-    public String getId() { return id; }
-    public String getFlightId() { return flightId; }
-    public void setFlightId(String flightId) { this.flightId = flightId; }
-    public String getStaffId() { return staffId; }
-    public void setStaffId(String staffId) { this.staffId = staffId; }
+    public Long getId() {
+        return id;
+    }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
 }
