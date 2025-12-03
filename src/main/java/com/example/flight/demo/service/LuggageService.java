@@ -1,7 +1,9 @@
 package com.example.flight.demo.service;
 
 import com.example.flight.demo.model.Luggage;
+import com.example.flight.demo.model.Ticket;
 import com.example.flight.demo.repository.LuggageRepository;
+import com.example.flight.demo.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,25 +11,33 @@ import java.util.List;
 @Service
 public class LuggageService {
 
-    private final LuggageRepository repository;
+    private final LuggageRepository luggageRepository;
+    private final TicketRepository ticketRepository;
 
-    public LuggageService(LuggageRepository repository) {
-        this.repository = repository;
+    public LuggageService(LuggageRepository luggageRepository,
+                          TicketRepository ticketRepository) {
+        this.luggageRepository = luggageRepository;
+        this.ticketRepository = ticketRepository;
     }
 
     public List<Luggage> findAll() {
-        return repository.findAll();
+        return luggageRepository.findAll();
     }
 
     public Luggage findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return luggageRepository.findById(id).orElse(null);
     }
 
-    public void save(Luggage luggage) {
-        repository.save(luggage);
+    public Luggage save(Luggage luggage) {
+        Ticket ticket = luggage.getTicket();
+        if (ticket == null || ticket.getId() == null ||
+                ticketRepository.findById(ticket.getId()).isEmpty()) {
+            throw new BusinessException("Ausgewähltes Ticket existiert nicht.");
+        }
+        return luggageRepository.save(luggage);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        luggageRepository.deleteById(id);
     }
 }

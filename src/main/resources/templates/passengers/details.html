@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Passenger Details</title></head>
+<head>
+    <title>Passenger Details</title>
+</head>
 <body>
+
 <h1>Passenger Details</h1>
+
 <p><strong>ID:</strong> <span th:text="${passenger.id}"></span></p>
 <p><strong>Name:</strong> <span th:text="${passenger.name}"></span></p>
-<p><strong>Currency:</strong> <span th:text="${passenger.currency}"></span></p>
-<p><strong>Email:</strong> <span th:text="${passenger.email}"></span></p>
-<p><strong>VIP:</strong> <span th:text="${passenger.vip}"></span></p>
-<p><strong>Tickets:</strong><br/>
-    <span th:each="t : ${passenger.tickets}" th:text="${t + ' '}"></span>
-</p>
-<a th:href="@{/passengers}">Back to list</a>
-<a th:href="@{/passengers/edit/{id}(id=${passenger.id})}">Edit</a>
+<p><strong>Währung:</strong> <span th:text="${passenger.currency}"></span></p>
+<p><strong>E-Mail:</strong> <span th:text="${passenger.email}"></span></p>
+<p><strong>VIP:</strong> <span th:text="${passenger.vip ? 'Ja' : 'Nein'}"></span></p>
+
+<hr>
+
+<h3>Tickets dieses Passagiers:</h3>
+<ul>
+    <li th:each="t : ${passenger.tickets}">
+        Ticket #<span th:text="${t.id}"></span> –
+        Sitz <span th:text="${t.seatNumber}"></span>,
+        Flug: <span th:text="${t.flight != null ? t.flight.name : 'unbekannt'}"></span>
+    </li>
+    <li th:if="${passenger.tickets.size() == 0}">
+        Keine Tickets vorhanden.
+    </li>
+</ul>
+
+<hr>
+
+<a th:href="@{/passengers}">Zurück</a>
+<a th:href="@{'/passengers/edit/' + ${passenger.id}}">Bearbeiten</a>
+
 </body>
 </html>

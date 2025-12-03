@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Passenger Form</title></head>
+<head>
+    <title th:text="${passenger.id == null ? 'Neuer Passagier' : 'Passagier bearbeiten'}"></title>
+</head>
 <body>
-<h1 th:text="${passenger.id == null} ? 'Add Passenger' : 'Edit Passenger'"></h1>
+
+<h1 th:text="${passenger.id == null ? 'Neuer Passagier' : 'Passagier bearbeiten'}"></h1>
+
 <form th:action="@{/passengers/save}" th:object="${passenger}" method="post">
+
     <input type="hidden" th:field="*{id}"/>
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" required/><br/><br/>
-    <label>Currency:</label>
-    <input type="text" th:field="*{currency}"/><br/><br/>
-    <label>Email:</label>
-    <input type="email" th:field="*{email}"/><br/><br/>
+
+    <!-- Name -->
+    <label>Name:</label><br>
+    <input type="text" th:field="*{name}"/><br>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></div>
+    <br>
+
+    <!-- Currency -->
+    <label>Währung (z.B. EUR):</label><br>
+    <input type="text" th:field="*{currency}"/><br>
+    <div th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}" style="color:red"></div>
+    <br>
+
+    <!-- Email -->
+    <label>E-Mail:</label><br>
+    <input type="email" th:field="*{email}"/><br>
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red"></div>
+    <br>
+
+    <!-- VIP -->
     <label>VIP:</label>
-    <input type="checkbox" th:field="*{vip}"/><br/><br/>
-    <label>Tickets (comma separated):</label>
-    <input type="text"
-           th:value="${passenger.tickets != null ? #strings.listJoin(passenger.tickets, ', ') : ''}"
-           name="ticketsInput"/>
-    <br/><br/>
-    <button type="submit">Save</button>
+    <input type="checkbox" th:field="*{vip}"/><br><br>
+
+    <button type="submit">Speichern</button>
+    <a th:href="@{/passengers}">Zurück</a>
 </form>
-<a th:href="@{/passengers}">Back to list</a>
+
 </body>
 </html>

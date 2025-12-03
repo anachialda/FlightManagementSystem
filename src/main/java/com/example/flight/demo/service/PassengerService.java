@@ -9,25 +9,43 @@ import java.util.List;
 @Service
 public class PassengerService {
 
-    private final PassengerRepository repository;
+    private final PassengerRepository passengerRepository;
 
-    public PassengerService(PassengerRepository repository) {
-        this.repository = repository;
+    public PassengerService(PassengerRepository passengerRepository) {
+        this.passengerRepository = passengerRepository;
     }
 
     public List<Passenger> findAll() {
-        return repository.findAll();
+        return passengerRepository.findAll();
     }
 
     public Passenger findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return passengerRepository.findById(id).orElse(null);
     }
 
-    public void save(Passenger passenger) {
-        repository.save(passenger);
+    public Passenger save(Passenger passenger) {
+        Long id = passenger.getId();
+
+        // Unicitate e-mail
+        passengerRepository.findAll().stream()
+                .filter(p -> !p.getId().equals(id))
+                .filter(p -> p.getEmail().equalsIgnoreCase(passenger.getEmail()))
+                .findAny()
+                .ifPresent(p -> {
+                    throw new BusinessException("E-Mail '" + passenger.getEmail() + "' ist bereits vergeben.");
+                });
+
+        return passengerRepository.save(passenger);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        Passenger passenger = passengerRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Passagier mit ID " + id + " wurde nicht gefunden."));
+
+        if (!passenger.getTickets().isEmpty()) {
+            throw new BusinessException("Passagier kann nicht gelöscht werden, da noch Tickets vorhanden sind.");
+        }
+
+        passengerRepository.delete(passenger);
     }
 }

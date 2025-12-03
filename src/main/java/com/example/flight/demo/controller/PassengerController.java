@@ -2,8 +2,10 @@ package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.Passenger;
 import com.example.flight.demo.service.PassengerService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -31,21 +33,19 @@ public class PassengerController {
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Passenger passenger = service.findById(id);
-        if (passenger == null) return "redirect:/passengers";
+        if (passenger == null) {
+            return "redirect:/passengers";
+        }
         model.addAttribute("passenger", passenger);
         return "passengers/form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Passenger passenger,
-                       @RequestParam(required = false) String ticketsInput) {
+    public String save(@Valid @ModelAttribute("passenger") Passenger passenger,
+                       BindingResult bindingResult) {
 
-        if (ticketsInput != null && !ticketsInput.isBlank()) {
-            passenger.setTickets(
-                    java.util.Arrays.stream(ticketsInput.split(","))
-                            .map(String::trim)
-                            .toList()
-            );
+        if (bindingResult.hasErrors()) {
+            return "passengers/form";
         }
 
         service.save(passenger);
@@ -55,7 +55,9 @@ public class PassengerController {
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
         Passenger passenger = service.findById(id);
-        if (passenger == null) return "redirect:/passengers";
+        if (passenger == null) {
+            return "redirect:/passengers";
+        }
         model.addAttribute("passenger", passenger);
         return "passengers/details";
     }
