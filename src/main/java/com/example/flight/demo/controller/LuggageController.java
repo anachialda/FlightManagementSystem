@@ -2,6 +2,7 @@ package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.Luggage;
 import com.example.flight.demo.model.LuggageStatus;
+import com.example.flight.demo.model.Ticket;
 import com.example.flight.demo.repository.LuggageRepository;
 import com.example.flight.demo.repository.TicketRepository;
 import jakarta.validation.Valid;
