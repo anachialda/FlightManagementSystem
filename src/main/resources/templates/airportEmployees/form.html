@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Airport Employee Form</title>
+    <title th:text="${employee.id == null ? 'Neuer Airport-Mitarbeiter' : 'Airport-Mitarbeiter bearbeiten'}"></title>
 </head>
 <body>
 
-<h1 th:text="${employee.id == null} ? 'Add Employee' : 'Edit Employee'"></h1>
+<h1 th:text="${employee.id == null ? 'Neuer Airport-Mitarbeiter' : 'Airport-Mitarbeiter bearbeiten'}"></h1>
 
 <form th:action="@{/airport-employees/save}" th:object="${employee}" method="post">
 
-    <!-- Hidden ID for editing -->
     <input type="hidden" th:field="*{id}"/>
 
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" required/><br/>
+    <!-- Name -->
+    <label>Name:</label><br>
+    <input type="text" th:field="*{name}"/><br>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></div>
+    <br>
 
-    <label>Designation:</label>
-    <input type="text" th:field="*{designation}" required/><br/>
+    <!-- Designation -->
+    <label>Bezeichnung:</label><br>
+    <input type="text" th:field="*{designation}"/><br>
+    <div th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}" style="color:red"></div>
+    <br>
 
-    <label>Department:</label>
-    <input type="text" th:field="*{department}" required/><br/>
+    <!-- Department -->
+    <label>Abteilung:</label><br>
+    <input type="text" th:field="*{department}"/><br>
+    <div th:if="${#fields.hasErrors('department')}" th:errors="*{department}" style="color:red"></div>
+    <br>
 
-    <button type="submit">Save</button>
+    <button type="submit">Speichern</button>
+    <a th:href="@{/airport-employees}">Zurück</a>
 </form>
-
-<a th:href="@{/airport-employees}">Back to list</a>
 
 </body>
 </html>

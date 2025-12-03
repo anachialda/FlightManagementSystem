@@ -2,8 +2,10 @@ package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.AirportEmployee;
 import com.example.flight.demo.service.AirportEmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -39,8 +41,13 @@ public class AirportEmployeeController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute AirportEmployee employee) {
-        // If employee.getId() == null → INSERT, otherwise UPDATE
+    public String save(@Valid @ModelAttribute("employee") AirportEmployee employee,
+                       BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "airportEmployees/form";
+        }
+
         service.save(employee);
         return "redirect:/airport-employees";
     }

@@ -7,31 +7,33 @@
 
 <h1>Airport Employees</h1>
 
-<a th:href="@{/airport-employees/new}">➕ Add New Employee</a>
+<a th:href="@{/airport-employees/new}">➕ Neuer Airport-Mitarbeiter</a>
 
-<table border="1">
+<table border="1" cellpadding="8">
+    <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Designation</th>
-        <th>Department</th>
-        <th>Actions</th>
+        <th>Bezeichnung</th>
+        <th>Abteilung</th>
+        <th>Aktionen</th>
     </tr>
-
+    </thead>
+    <tbody>
     <tr th:each="emp : ${employees}">
         <td th:text="${emp.id}"></td>
         <td th:text="${emp.name}"></td>
         <td th:text="${emp.designation}"></td>
         <td th:text="${emp.department}"></td>
         <td>
-            <a th:href="@{/airport-employees/details/{id}(id=${emp.id})}">Details</a>
-            <a th:href="@{/airport-employees/edit/{id}(id=${emp.id})}">Edit</a>
-            <form th:action="@{/airport-employees/delete/{id}(id=${emp.id})}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
+            <a th:href="@{'/airport-employees/details/' + ${emp.id}}">Details</a> |
+            <a th:href="@{'/airport-employees/edit/' + ${emp.id}}">Bearbeiten</a> |
+            <form th:action="@{'/airport-employees/delete/' + ${emp.id}}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Löschen?')">Löschen</button>
             </form>
         </td>
     </tr>
-
+    </tbody>
 </table>
 
 </body>

@@ -2,8 +2,10 @@ package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.Airplane;
 import com.example.flight.demo.service.AirplaneService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -38,15 +40,16 @@ public class AirplaneController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Airplane airplane,
-                       @RequestParam(required = false) String flightsInput) {
+    public String save(@Valid @ModelAttribute("airplane") Airplane airplane,
+                       BindingResult bindingResult,
+                       Model model) {
 
-        if (flightsInput != null && !flightsInput.isBlank()) {
-            airplane.setFlights(
-                    java.util.Arrays.stream(flightsInput.split(","))
-                            .map(String::trim)
-                            .toList()
-            );
+        // Business Validation (Unique number)
+        service.validateUniqueNumber(airplane, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("airplane", airplane);
+            return "airplanes/form";
         }
 
         service.save(airplane);

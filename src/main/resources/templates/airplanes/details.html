@@ -8,15 +8,27 @@
 <h1>Airplane Details</h1>
 
 <p><strong>ID:</strong> <span th:text="${airplane.id}"></span></p>
-<p><strong>Number:</strong> <span th:text="${airplane.number}"></span></p>
+<p><strong>Flugzeugnummer:</strong> <span th:text="${airplane.number}"></span></p>
 
-<p>
-    <strong>Flights:</strong><br/>
-    <span th:each="f : ${airplane.flights}" th:text="${f + ' '}"></span>
-</p>
+<hr>
 
-<a th:href="@{/airplanes}">Back to list</a>
-<a th:href="@{/airplanes/edit/{id}(id=${airplane.id})}">Edit</a>
+<h3>Flüge dieses Flugzeugs:</h3>
+
+<ul>
+    <li th:each="flight : ${airplane.flights}">
+        <a th:href="@{'/flights/details/' + ${flight.id}}"
+           th:text="${flight.name}">Flight</a>
+    </li>
+
+    <li th:if="${airplane.flights.size() == 0}">
+        Keine Flüge vorhanden.
+    </li>
+</ul>
+
+<hr>
+
+<a th:href="@{/airplanes}">Zurück</a>
+<a th:href="@{'/airplanes/edit/' + ${airplane.id}}">Bearbeiten</a>
 
 </body>
 </html>
