@@ -5,14 +5,19 @@
 <h1 th:text="${luggage.id == null} ? 'Add Luggage' : 'Edit Luggage'"></h1>
 <form th:action="@{/luggage/save}" th:object="${luggage}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    <label>Ticket ID:</label>
-    <input type="text" th:field="*{ticketId}" required/><br/><br/>
-    <label>Status:</label>
+    <label>Ticket:</label><br/>
+    <select th:field="*{ticketId}" required>
+        <option value="">-- select --</option>
+        <option th:each="t : ${tickets}" th:value="${t.id}" th:text="${t.seatNumber} + ' (' + t.passenger.name + ')'"/>
+    </select>
+    <div th:if="${#fields.hasErrors('ticket')}" th:errors="*{ticket}" style="color:red"></div>
+    <br/>
+    <label>Status:</label><br/>
     <select th:field="*{status}">
-        <option th:value="CHECKED_IN">CHECKED_IN</option>
-        <option th:value="LOADED">LOADED</option>
-        <option th:value="DELIVERED">DELIVERED</option>
-    </select><br/><br/>
+        <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" style="color:red"></div>
+    <br/>
     <button type="submit">Save</button>
 </form>
 <a th:href="@{/luggage}">Back to list</a>

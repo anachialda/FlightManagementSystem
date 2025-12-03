@@ -8,28 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "notice_boards")
 public class NoticeBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Datum darf nicht leer sein")
-    @Column(nullable = false)
+    @NotNull
     private LocalDate date;
 
-    @OneToMany(mappedBy = "noticeBoard", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "noticeBoard", cascade = CascadeType.ALL)
     private List<Flight> flightsOfTheDay = new ArrayList<>();
-
-    public NoticeBoard() {
-    }
-
-    public NoticeBoard(LocalDate date) {
-        this.date = date;
-    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getDate() {

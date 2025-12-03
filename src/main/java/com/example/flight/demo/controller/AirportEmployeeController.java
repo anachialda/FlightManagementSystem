@@ -1,8 +1,7 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.AirportEmployee;
-import com.example.flight.demo.service.AirportEmployeeService;
-import com.example.flight.demo.service.BusinessException;
+import com.example.flight.demo.repository.AirportEmployeeRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,71 +12,48 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/airport-employees")
 public class AirportEmployeeController {
 
-    private final AirportEmployeeService airportEmployeeService;
+    private final AirportEmployeeRepository repository;
 
-    public AirportEmployeeController(AirportEmployeeService airportEmployeeService) {
-        this.airportEmployeeService = airportEmployeeService;
+    public AirportEmployeeController(AirportEmployeeRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("employees", airportEmployeeService.findAll());
+        model.addAttribute("employees", repository.findAll());
         return "airportEmployees/list";
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
+    public String createForm(Model model) {
         model.addAttribute("employee", new AirportEmployee());
         return "airportEmployees/form";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        AirportEmployee employee = airportEmployeeService.findById(id);
-        if (employee == null) {
-            return "redirect:/airport-employees";
-        }
-        model.addAttribute("employee", employee);
+    public String editForm(@PathVariable Long id, Model model) {
+        model.addAttribute("employee", repository.findById(id).orElseThrow());
         return "airportEmployees/form";
     }
 
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute("employee") AirportEmployee employee,
-                       BindingResult bindingResult,
-                       Model model) {
-
-        if (bindingResult.hasErrors()) {
+    public String save(@Valid @ModelAttribute("employee") AirportEmployee employee, BindingResult result) {
+        if (result.hasErrors()) {
             return "airportEmployees/form";
         }
+        repository.save(employee);
+        return "redirect:/airport-employees";
+    }
 
-        try {
-            airportEmployeeService.save(employee);
-            return "redirect:/airport-employees";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "airportEmployees/form";
-        }
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        repository.deleteById(id);
+        return "redirect:/airport-employees";
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        AirportEmployee employee = airportEmployeeService.findById(id);
-        if (employee == null) {
-            return "redirect:/airport-employees";
-        }
-        model.addAttribute("employee", employee);
+        model.addAttribute("employee", repository.findById(id).orElseThrow());
         return "airportEmployees/details";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            airportEmployeeService.delete(id);
-            return "redirect:/airport-employees";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("employees", airportEmployeeService.findAll());
-            return "airportEmployees/list";
-        }
     }
 }
