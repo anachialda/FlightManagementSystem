@@ -12,12 +12,10 @@ public class AirportEmployee extends Staff {
 
     @NotBlank(message = "Bezeichnung darf nicht leer sein")
     @Size(min = 2, max = 100, message = "Bezeichnung muss zwischen 2 und 100 Zeichen lang sein")
-    @Column(nullable = false, length = 100)
     private String designation;
 
     @NotBlank(message = "Abteilung darf nicht leer sein")
     @Size(min = 2, max = 100, message = "Abteilung muss zwischen 2 und 100 Zeichen lang sein")
-    @Column(nullable = false, length = 100)
     private String department;
 
     public AirportEmployee() {

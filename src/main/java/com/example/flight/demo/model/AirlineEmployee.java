@@ -25,12 +25,10 @@ public class AirlineEmployee extends Staff {
 
     @NotNull(message = "Rolle darf nicht leer sein")
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
     private Role role;
 
     @NotBlank(message = "Lizenznummer darf nicht leer sein")
     @Size(min = 3, max = 50, message = "Lizenznummer muss zwischen 3 und 50 Zeichen lang sein")
-    @Column(nullable = false, length = 50, unique = true)
     private String licenseNumber;
 
     @PastOrPresent(message = "Arbeitsbeginn darf nicht in der Zukunft liegen")
