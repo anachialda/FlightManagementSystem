@@ -1,69 +1,49 @@
 package com.example.flight.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "tickets")
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Positive(message = "Preis muss positiv sein")
-    @Column(nullable = false)
-    private double price;
-
-    @NotBlank(message = "Sitznummer darf nicht leer sein")
-    @Column(nullable = false, length = 10)
-    private String seatNumber;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "passenger_id", nullable = false)
-    @NotNull(message = "Passagier darf nicht leer sein")
+    @ManyToOne
+    @NotNull
     private Passenger passenger;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "flight_id", nullable = false)
-    @NotNull(message = "Flug darf nicht leer sein")
+    @ManyToOne
+    @NotNull
     private Flight flight;
+
+    @Positive
+    private BigDecimal price;
+
+    private String seatNumber;
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Luggage> luggages = new ArrayList<>();
 
-    public Ticket() {
-    }
+    @Transient
+    private Long passengerId;
 
-    public Ticket(Passenger passenger, Flight flight, double price, String seatNumber) {
-        this.passenger = passenger;
-        this.flight = flight;
-        this.price = price;
-        this.seatNumber = seatNumber;
-    }
+    @Transient
+    private Long flightId;
 
     public Long getId() {
         return id;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Passenger getPassenger() {
@@ -82,11 +62,43 @@ public class Ticket {
         this.flight = flight;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
+    }
+
     public List<Luggage> getLuggages() {
         return luggages;
     }
 
     public void setLuggages(List<Luggage> luggages) {
         this.luggages = luggages;
+    }
+
+    public Long getPassengerId() {
+        return passengerId;
+    }
+
+    public void setPassengerId(Long passengerId) {
+        this.passengerId = passengerId;
+    }
+
+    public Long getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Long flightId) {
+        this.flightId = flightId;
     }
 }

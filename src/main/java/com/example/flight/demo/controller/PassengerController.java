@@ -1,8 +1,7 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.Passenger;
-import com.example.flight.demo.service.BusinessException;
-import com.example.flight.demo.service.PassengerService;
+import com.example.flight.demo.repository.PassengerRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,71 +12,48 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/passengers")
 public class PassengerController {
 
-    private final PassengerService passengerService;
+    private final PassengerRepository passengerRepository;
 
-    public PassengerController(PassengerService passengerService) {
-        this.passengerService = passengerService;
+    public PassengerController(PassengerRepository passengerRepository) {
+        this.passengerRepository = passengerRepository;
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("passengers", passengerService.findAll());
+        model.addAttribute("passengers", passengerRepository.findAll());
         return "passengers/list";
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
+    public String createForm(Model model) {
         model.addAttribute("passenger", new Passenger());
         return "passengers/form";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Passenger passenger = passengerService.findById(id);
-        if (passenger == null) {
-            return "redirect:/passengers";
-        }
-        model.addAttribute("passenger", passenger);
+    public String editForm(@PathVariable Long id, Model model) {
+        model.addAttribute("passenger", passengerRepository.findById(id).orElseThrow());
         return "passengers/form";
     }
 
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute("passenger") Passenger passenger,
-                       BindingResult bindingResult,
-                       Model model) {
-
-        if (bindingResult.hasErrors()) {
+    public String save(@Valid @ModelAttribute("passenger") Passenger passenger, BindingResult result) {
+        if (result.hasErrors()) {
             return "passengers/form";
         }
+        passengerRepository.save(passenger);
+        return "redirect:/passengers";
+    }
 
-        try {
-            passengerService.save(passenger);
-            return "redirect:/passengers";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "passengers/form";
-        }
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        passengerRepository.deleteById(id);
+        return "redirect:/passengers";
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        Passenger passenger = passengerService.findById(id);
-        if (passenger == null) {
-            return "redirect:/passengers";
-        }
-        model.addAttribute("passenger", passenger);
+        model.addAttribute("passenger", passengerRepository.findById(id).orElseThrow());
         return "passengers/details";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            passengerService.delete(id);
-            return "redirect:/passengers";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("passengers", passengerService.findAll());
-            return "passengers/list";
-        }
     }
 }

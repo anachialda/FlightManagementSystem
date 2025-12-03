@@ -5,19 +5,28 @@
 <h1 th:text="${ticket.id == null} ? 'Add Ticket' : 'Edit Ticket'"></h1>
 <form th:action="@{/tickets/save}" th:object="${ticket}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    <label>Passenger ID:</label>
-    <input type="text" th:field="*{passengerId}" required/><br/><br/>
-    <label>Flight ID:</label>
-    <input type="text" th:field="*{flightId}" required/><br/><br/>
-    <label>Price:</label>
-    <input type="number" step="0.01" th:field="*{price}"/><br/><br/>
-    <label>Seat Number:</label>
-    <input type="text" th:field="*{seatNumber}"/><br/><br/>
-    <label>Luggages (comma separated):</label>
-    <input type="text"
-           th:value="${ticket.luggages != null ? #strings.listJoin(ticket.luggages, ', ') : ''}"
-           name="luggagesInput"/>
-    <br/><br/>
+    <label>Passenger:</label><br/>
+    <select th:field="*{passengerId}" required>
+        <option value="">-- select --</option>
+        <option th:each="p : ${passengers}" th:value="${p.id}" th:text="${p.name}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('passenger')}" th:errors="*{passenger}" style="color:red"></div>
+    <br/>
+    <label>Flight:</label><br/>
+    <select th:field="*{flightId}" required>
+        <option value="">-- select --</option>
+        <option th:each="f : ${flights}" th:value="${f.id}" th:text="${f.name}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('flight')}" th:errors="*{flight}" style="color:red"></div>
+    <br/>
+    <label>Price:</label><br/>
+    <input type="number" step="0.01" th:field="*{price}"/>
+    <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color:red"></div>
+    <br/>
+    <label>Seat Number:</label><br/>
+    <input type="text" th:field="*{seatNumber}"/>
+    <div th:if="${#fields.hasErrors('seatNumber')}" th:errors="*{seatNumber}" style="color:red"></div>
+    <br/>
     <button type="submit">Save</button>
 </form>
 <a th:href="@{/tickets}">Back to list</a>
