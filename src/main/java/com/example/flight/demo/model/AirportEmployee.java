@@ -1,30 +1,41 @@
 package com.example.flight.demo.model;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@DiscriminatorValue("AIRPORT")
-public class AirportEmployee extends Staff {
+@Table(name = "airport_employees")
+public class AirportEmployee {
 
-    @NotBlank(message = "Bezeichnung darf nicht leer sein")
-    @Size(min = 2, max = 100, message = "Bezeichnung muss zwischen 2 und 100 Zeichen lang sein")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private String name;
+
+    @NotBlank
     private String designation;
 
-    @NotBlank(message = "Abteilung darf nicht leer sein")
-    @Size(min = 2, max = 100, message = "Abteilung muss zwischen 2 und 100 Zeichen lang sein")
+    @NotBlank
     private String department;
 
-    public AirportEmployee() {
+    public Long getId() {
+        return id;
     }
 
-    public AirportEmployee(String name, String designation, String department) {
-        super(name);
-        this.designation = designation;
-        this.department = department;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDesignation() {

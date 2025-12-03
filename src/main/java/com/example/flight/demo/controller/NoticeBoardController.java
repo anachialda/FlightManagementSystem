@@ -1,8 +1,7 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.NoticeBoard;
-import com.example.flight.demo.service.BusinessException;
-import com.example.flight.demo.service.NoticeBoardService;
+import com.example.flight.demo.repository.NoticeBoardRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,74 +9,51 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/noticeboards")
+@RequestMapping("/notice-boards")
 public class NoticeBoardController {
 
-    private final NoticeBoardService noticeBoardService;
+    private final NoticeBoardRepository repository;
 
-    public NoticeBoardController(NoticeBoardService noticeBoardService) {
-        this.noticeBoardService = noticeBoardService;
+    public NoticeBoardController(NoticeBoardRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("boards", noticeBoardService.findAll());
-        return "noticeboards/list";
+        model.addAttribute("noticeBoards", repository.findAll());
+        return "noticeBoards/list";
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
-        model.addAttribute("board", new NoticeBoard());
-        return "noticeboards/form";
+    public String createForm(Model model) {
+        model.addAttribute("noticeBoard", new NoticeBoard());
+        return "noticeBoards/form";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        NoticeBoard board = noticeBoardService.findById(id);
-        if (board == null) {
-            return "redirect:/noticeboards";
-        }
-        model.addAttribute("board", board);
-        return "noticeboards/form";
+    public String editForm(@PathVariable Long id, Model model) {
+        model.addAttribute("noticeBoard", repository.findById(id).orElseThrow());
+        return "noticeBoards/form";
     }
 
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute("board") NoticeBoard board,
-                       BindingResult bindingResult,
-                       Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "noticeboards/form";
+    public String save(@Valid @ModelAttribute("noticeBoard") NoticeBoard noticeBoard, BindingResult result) {
+        if (result.hasErrors()) {
+            return "noticeBoards/form";
         }
+        repository.save(noticeBoard);
+        return "redirect:/notice-boards";
+    }
 
-        try {
-            noticeBoardService.save(board);
-            return "redirect:/noticeboards";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "noticeboards/form";
-        }
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        repository.deleteById(id);
+        return "redirect:/notice-boards";
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        NoticeBoard board = noticeBoardService.findById(id);
-        if (board == null) {
-            return "redirect:/noticeboards";
-        }
-        model.addAttribute("board", board);
-        return "noticeboards/details";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            noticeBoardService.delete(id);
-            return "redirect:/noticeboards";
-        } catch (BusinessException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("boards", noticeBoardService.findAll());
-            return "noticeboards/list";
-        }
+        model.addAttribute("noticeBoard", repository.findById(id).orElseThrow());
+        return "noticeBoards/details";
     }
 }

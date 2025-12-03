@@ -4,46 +4,30 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "luggages")
 public class Luggage {
-
-    public enum Status {
-        CHECKED_IN,
-        LOADED,
-        DELIVERED
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Status darf nicht leer sein")
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private Status status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_id", nullable = false)
-    @NotNull(message = "Ticket darf nicht leer sein")
+    @ManyToOne
+    @NotNull
     private Ticket ticket;
 
-    public Luggage() {
-    }
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private LuggageStatus status = LuggageStatus.CHECKED_IN;
 
-    public Luggage(Ticket ticket, Status status) {
-        this.ticket = ticket;
-        this.status = status;
-    }
+    @Transient
+    private Long ticketId;
 
     public Long getId() {
         return id;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Ticket getTicket() {
@@ -52,5 +36,21 @@ public class Luggage {
 
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
+    }
+
+    public LuggageStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(LuggageStatus status) {
+        this.status = status;
+    }
+
+    public Long getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 }
