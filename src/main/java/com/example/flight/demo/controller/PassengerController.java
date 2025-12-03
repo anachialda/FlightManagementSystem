@@ -1,6 +1,7 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.Passenger;
+import com.example.flight.demo.service.BusinessException;
 import com.example.flight.demo.service.PassengerService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/passengers")
 public class PassengerController {
 
-    private final PassengerService service;
+    private final PassengerService passengerService;
 
-    public PassengerController(PassengerService service) {
-        this.service = service;
+    public PassengerController(PassengerService passengerService) {
+        this.passengerService = passengerService;
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("passengers", service.findAll());
+        model.addAttribute("passengers", passengerService.findAll());
         return "passengers/list";
     }
 
@@ -32,7 +33,7 @@ public class PassengerController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Passenger passenger = service.findById(id);
+        Passenger passenger = passengerService.findById(id);
         if (passenger == null) {
             return "redirect:/passengers";
         }
@@ -42,19 +43,25 @@ public class PassengerController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("passenger") Passenger passenger,
-                       BindingResult bindingResult) {
+                       BindingResult bindingResult,
+                       Model model) {
 
         if (bindingResult.hasErrors()) {
             return "passengers/form";
         }
 
-        service.save(passenger);
-        return "redirect:/passengers";
+        try {
+            passengerService.save(passenger);
+            return "redirect:/passengers";
+        } catch (BusinessException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "passengers/form";
+        }
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        Passenger passenger = service.findById(id);
+        Passenger passenger = passengerService.findById(id);
         if (passenger == null) {
             return "redirect:/passengers";
         }
@@ -63,8 +70,14 @@ public class PassengerController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "redirect:/passengers";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            passengerService.delete(id);
+            return "redirect:/passengers";
+        } catch (BusinessException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            model.addAttribute("passengers", passengerService.findAll());
+            return "passengers/list";
+        }
     }
 }

@@ -1,68 +1,83 @@
 package com.example.flight.demo.controller;
 
 import com.example.flight.demo.model.NoticeBoard;
+import com.example.flight.demo.service.BusinessException;
 import com.example.flight.demo.service.NoticeBoardService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/notice-boards")
+@RequestMapping("/noticeboards")
 public class NoticeBoardController {
 
-    private final NoticeBoardService service;
+    private final NoticeBoardService noticeBoardService;
 
-    public NoticeBoardController(NoticeBoardService service) {
-        this.service = service;
+    public NoticeBoardController(NoticeBoardService noticeBoardService) {
+        this.noticeBoardService = noticeBoardService;
     }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("noticeBoards", service.findAll());
-        return "noticeBoards/list";
+        model.addAttribute("boards", noticeBoardService.findAll());
+        return "noticeboards/list";
     }
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("noticeBoard", new NoticeBoard());
-        return "noticeBoards/form";
+        model.addAttribute("board", new NoticeBoard());
+        return "noticeboards/form";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        NoticeBoard noticeBoard = service.findById(id);
-        if (noticeBoard == null) return "redirect:/notice-boards";
-        model.addAttribute("noticeBoard", noticeBoard);
-        return "noticeBoards/form";
+        NoticeBoard board = noticeBoardService.findById(id);
+        if (board == null) {
+            return "redirect:/noticeboards";
+        }
+        model.addAttribute("board", board);
+        return "noticeboards/form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute NoticeBoard noticeBoard,
-                       @RequestParam(required = false) String flightsInput) {
+    public String save(@Valid @ModelAttribute("board") NoticeBoard board,
+                       BindingResult bindingResult,
+                       Model model) {
 
-        if (flightsInput != null && !flightsInput.isBlank()) {
-            noticeBoard.setFlightsOfTheDay(
-                    java.util.Arrays.stream(flightsInput.split(","))
-                            .map(String::trim)
-                            .toList()
-            );
+        if (bindingResult.hasErrors()) {
+            return "noticeboards/form";
         }
 
-        service.save(noticeBoard);
-        return "redirect:/notice-boards";
+        try {
+            noticeBoardService.save(board);
+            return "redirect:/noticeboards";
+        } catch (BusinessException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "noticeboards/form";
+        }
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        NoticeBoard noticeBoard = service.findById(id);
-        if (noticeBoard == null) return "redirect:/notice-boards";
-        model.addAttribute("noticeBoard", noticeBoard);
-        return "noticeBoards/details";
+        NoticeBoard board = noticeBoardService.findById(id);
+        if (board == null) {
+            return "redirect:/noticeboards";
+        }
+        model.addAttribute("board", board);
+        return "noticeboards/details";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "redirect:/notice-boards";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            noticeBoardService.delete(id);
+            return "redirect:/noticeboards";
+        } catch (BusinessException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            model.addAttribute("boards", noticeBoardService.findAll());
+            return "noticeboards/list";
+        }
     }
 }
