@@ -10,44 +10,50 @@
 <form th:action="@{/flights/save}" th:object="${flight}" method="post">
     <input type="hidden" th:field="*{id}"/>
 
-    <label>Flight Name:</label>
-    <input type="text" th:field="*{name}" required /><br/><br/>
+    <label>Flight Name:</label><br/>
+    <input type="text" th:field="*{name}" required />
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></div>
+    <br/>
 
-    <label>Notice Board ID:</label>
-    <input type="text" th:field="*{noticeBoardId}" /><br/><br/>
+    <label>Notice Board:</label><br/>
+    <select th:field="*{noticeBoardId}">
+        <option value="">-- select --</option>
+        <option th:each="board : ${noticeBoards}" th:value="${board.id}" th:text="${board.date}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('noticeBoard')}" th:errors="*{noticeBoard}" style="color:red"></div>
+    <br/>
 
-    <label>Airplane ID:</label>
-    <input type="number" th:field="*{airplaneId}" /><br/><br/>
+    <label>Airplane:</label><br/>
+    <select th:field="*{airplaneId}">
+        <option value="">-- select --</option>
+        <option th:each="plane : ${airplanes}" th:value="${plane.id}" th:text="${plane.number}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('airplane')}" th:errors="*{airplane}" style="color:red"></div>
+    <br/>
 
-    <label>Departure Time:</label>
-    <input type="datetime-local" th:field="*{departureTime}" /><br/><br/>
+    <label>Departure Time:</label><br/>
+    <input type="datetime-local" th:field="*{departureTime}" />
+    <div th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}" style="color:red"></div>
+    <br/>
 
-    <label>Arrival Time:</label>
-    <input type="datetime-local" th:field="*{arrivalTime}" /><br/><br/>
+    <label>Arrival Time:</label><br/>
+    <input type="datetime-local" th:field="*{arrivalTime}" />
+    <div th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}" style="color:red"></div>
+    <br/>
 
-    <label>Status:</label>
+    <label>Status:</label><br/>
     <select th:field="*{status}">
         <option th:each="s : ${statuses}"
                 th:value="${s}"
                 th:text="${s}">
         </option>
     </select>
-    <br/><br/>
-
-    <label>Tickets (comma separated):</label>
-    <input type="text"
-           th:value="${flight.tickets != null ? #strings.arrayJoin(flight.tickets, ', ') : ''}"
-           name="ticketsInput"/><br/><br/>
-
-    <label>Flight Assignments (comma separated):</label>
-    <input type="text"
-           th:value="${flight.flightAssignments != null ? #strings.arrayJoin(flight.flightAssignments, ', ') : ''}"
-           name="assignmentsInput"/><br/><br/>
+    <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" style="color:red"></div>
+    <br/>
 
     <button type="submit">Save</button>
+    <a th:href="@{/flights}">Back to list</a>
 </form>
-
-<a th:href="@{/flights}">Back to list</a>
 
 </body>
 </html>

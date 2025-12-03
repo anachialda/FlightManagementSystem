@@ -5,10 +5,20 @@
 <h1 th:text="${assignment.id == null} ? 'Add Assignment' : 'Edit Assignment'"></h1>
 <form th:action="@{/assignments/save}" th:object="${assignment}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    <label>Flight ID:</label>
-    <input type="text" th:field="*{flightId}" required/><br/><br/>
-    <label>Staff ID:</label>
-    <input type="text" th:field="*{staffId}" required/><br/><br/>
+    <label>Flight:</label><br/>
+    <select th:field="*{flightId}" required>
+        <option value="">-- select --</option>
+        <option th:each="f : ${flights}" th:value="${f.id}" th:text="${f.name}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('flight')}" th:errors="*{flight}" style="color:red"></div>
+    <br/>
+    <label>Staff:</label><br/>
+    <select th:field="*{staffId}" required>
+        <option value="">-- select --</option>
+        <option th:each="e : ${employees}" th:value="${e.id}" th:text="${e.name + ' (' + e.role + ')'}"></option>
+    </select>
+    <div th:if="${#fields.hasErrors('staff')}" th:errors="*{staff}" style="color:red"></div>
+    <br/>
     <button type="submit">Save</button>
 </form>
 <a th:href="@{/assignments}">Back to list</a>
